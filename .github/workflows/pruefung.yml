@@ -1,0 +1,28 @@
+name: Prüfung
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  pruefen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Speisekarte prüfen und Seiten erzeugen
+        run: node tools/build.mjs
+      - name: Erzeugte Seiten aktuell?
+        run: |
+          if ! git diff --quiet; then
+            echo "::error::Die erzeugten Seiten passen nicht zu data/*.json – bitte lokal 'node tools/build.mjs' ausführen und committen."
+            git --no-pager diff --stat
+            exit 1
+          fi
+      - name: Unit-Tests
+        run: node --test tests/unit.test.mjs

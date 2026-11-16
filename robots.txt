@@ -1,0 +1,3 @@
+# Vor dem Livegang: Seiten tragen „noindex“. Crawler dürfen lesen, damit sie das noindex sehen.
+User-agent: *
+Allow: /
