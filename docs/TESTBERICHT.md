@@ -3,7 +3,7 @@
 Stand 16.11.2026 · Headless Chrome (Playwright 1.63) gegen `public/` über einen lokalen Server · Uhrzeit im Browser simuliert (Europe/Berlin).
 Ausführen: `node tools/build.mjs && python3 tests/e2e.py` · Ergebnisdatei: [`tests/ergebnis.json`](../tests/ergebnis.json).
 
-**Ergebnis: 85 von 85 Prüfungen bestanden.**
+**Ergebnis: 86 von 86 Prüfungen bestanden.**
 
 Für den Normalbetrieb werden die Daten nur im Test ergänzt (Betreiberangaben, Zahlung bar, Steuerstatus, bestätigte Lieferorte; in C/D/F/G zusätzlich alle Prüfpunkte als bestätigt). Teil B und E prüfen die echten, migrierten Daten.
 
@@ -118,7 +118,8 @@ Für den Normalbetrieb werden die Daten nur im Test ergänzt (Betreiberangaben, 
 
 - ✅ „Bewegung reduzieren“: statisches Logo ohne Intro
 - ✅ Intro läuft
-- ✅ Intro endet nach ca. 3,4 s in der statischen Endpose
+- ✅ Intro (wie MINAR, 5,5 s) endet in der Original-Silhouette
+- ✅ Logo-Schriftzug SHAHI (5 Buchstaben), Unterzeile ohne „Restaurant“
 - ✅ keine Fehler
 
 ## Visuelle Abnahme MINAR ↔ SHAHI
@@ -130,13 +131,13 @@ Für den Normalbetrieb werden die Daten nur im Test ergänzt (Betreiberangaben, 
 | 1 | Header-Höhe | identisch (Topbar + Kopfzeile, `--header-h` unverändert) |
 | 2 | Logo-Platzierung | identisch; SHAHI-Logo ist kompakter (Seitenverhältnis 2,6 : 1 statt 4,2 : 1), gleiche Höhe 52/44/38 px |
 | 3 | Navigationsabstände | identisch, gleitender Indikator wie MINAR |
-| 4 | Hero-Proportionen | identisch; Logo-Breite so gewählt, dass die Höhe der des MINAR-Logos entspricht |
+| 4 | Hero-Proportionen | identisch (gleiches Logo-SVG-Format, gleiche Größe) |
 | 5 | Hintergrundfarben und Verläufe | identisch (Aurora, Raster, Halo, rotierender Ring, Laufbänder); Hintergrund-Schriftzug „SHAHI“ |
 | 6 | Typografie und Schriftgrößen | identisch (Systemschriften, keine neue Schrift; Fraunces nur als Pfade im Logo) |
 | 7 | Button-Styling | identisch (Blattform, Licht-Spot, Lichtstreif, Roll-Label, Magnet) |
 | 8 | Karten-Design | identisch (Gerichte, Service-Liste, Kontakt- und Zonenkarten) |
 | 9 | Hover-Zustände | identisch (`fx.js` unverändert) |
-| 10 | Animationen | identisch; Logo-Intro ohne Tierfigur, 3,4 s statt 5,5 s |
+| 10 | Animationen | identisch, auch das Logo-Intro (Tierfigur, 5,5 s); Schriftzug „SHAHI“ |
 | 11 | Abschnittsabstände | identisch |
 | 12 | Warenkorb | identisch (dunkle Karte, Referenz, Mengensteuerung, Ändern/Entfernen, Summen) |
 | 13 | Bestellübersicht | identisch (Bon-Gestaltung); zusätzlicher Textlink „Bestelltext kopieren“ |

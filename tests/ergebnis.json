@@ -112,7 +112,7 @@
  {
   "pruefung": "Referenz SHA-A-YYYYMM-XXXXXXXX",
   "ok": true,
-  "info": "SHA-A-202611-JWGD55AG"
+  "info": "SHA-A-202611-2TSX2ZCV"
  },
  {
   "pruefung": "Menge + aktualisiert Summe",
@@ -142,7 +142,7 @@
  {
   "pruefung": "Bon: Positionen mit Extras und Pfand",
   "ok": true,
-  "info": "SHAHI KÜCHE\n\nBachgasse 17\n88400 Biberach an der Riß\n\nBESTELLREFERENZ\nSHA-A-202611-JWGD55AG\n\nIHRE BESTELLÜBERSICHT\nBestellart\nAbholung\nName\nErika Muster\nTelefon\n0170 1234567\nWunschzeit\nso schnell wie möglich (unverbindlich)\n2 ×\nNr. 106 Salami\n18,80 €\nje 9,40 €\n1 ×\nNr. 20 Hamburgerle\n10,00 €\nBeilage d"
+  "info": "SHAHI KÜCHE\n\nBachgasse 17\n88400 Biberach an der Riß\n\nBESTELLREFERENZ\nSHA-A-202611-2TSX2ZCV\n\nIHRE BESTELLÜBERSICHT\nBestellart\nAbholung\nName\nErika Muster\nTelefon\n0170 1234567\nWunschzeit\nso schnell wie möglich (unverbindlich)\n2 ×\nNr. 106 Salami\n18,80 €\nje 9,40 €\n1 ×\nNr. 20 Hamburgerle\n10,00 €\nBeilage d"
  },
  {
   "pruefung": "Bon: Gesamt bar 67,05 €",
@@ -157,7 +157,7 @@
  {
   "pruefung": "Nachricht vollständig",
   "ok": true,
-  "info": "SHAHI KÜCHE – BESTELLUNG\n\nBestellreferenz: SHA-A-202611-JWGD55AG\nBestellart: Abholung\nName: Erika Muster\nTelefon: 0170 1234567\nWunschzeit: so schnell wie möglich\n\nBESTELLUNG\n\n2 × Nr. 106 Salami – 18,80 € (je 9,40 €)\n\n1 × Nr. 20 Hamburgerle – 10,00 €\n- Beilage dazu: mit Wedges (+3,50 €)\n- Extra Zusat"
+  "info": "SHAHI KÜCHE – BESTELLUNG\n\nBestellreferenz: SHA-A-202611-2TSX2ZCV\nBestellart: Abholung\nName: Erika Muster\nTelefon: 0170 1234567\nWunschzeit: so schnell wie möglich\n\nBESTELLUNG\n\n2 × Nr. 106 Salami – 18,80 € (je 9,40 €)\n\n1 × Nr. 20 Hamburgerle – 10,00 €\n- Beilage dazu: mit Wedges (+3,50 €)\n- Extra Zusat"
  },
  {
   "pruefung": "keine geschützten Leerzeichen in der Nachricht",
@@ -217,7 +217,7 @@
  {
   "pruefung": "Lieferadresse mit PLZ und Ort",
   "ok": true,
-  "info": "SHAHI KÜCHE – BESTELLUNG\n\nBestellreferenz: SHA-L-202611-JWGD55AG\nBestellart: Lieferung\nName: Erika Muster\nTelefon: 0170 1234567\nLieferadresse: Hauptstraße 5, 88447 Warthausen\nWunschzeit: so schnell wie möglich\n\nBESTELLUNG\n\n2 × Nr. 106 Salami – 18,80 € (je 9,40 €)\n\n1 × Nr. 20 Hamburgerle – 10,00 €\n- "
+  "info": "SHAHI KÜCHE – BESTELLUNG\n\nBestellreferenz: SHA-L-202611-2TSX2ZCV\nBestellart: Lieferung\nName: Erika Muster\nTelefon: 0170 1234567\nLieferadresse: Hauptstraße 5, 88447 Warthausen\nWunschzeit: so schnell wie möglich\n\nBESTELLUNG\n\n2 × Nr. 106 Salami – 18,80 € (je 9,40 €)\n\n1 × Nr. 20 Hamburgerle – 10,00 €\n- "
  },
  {
   "pruefung": "Liefergebühr in der Nachricht",
@@ -415,7 +415,12 @@
   "info": ""
  },
  {
-  "pruefung": "Intro endet nach ca. 3,4 s in der statischen Endpose",
+  "pruefung": "Intro (wie MINAR, 5,5 s) endet in der Original-Silhouette",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Logo-Schriftzug SHAHI (5 Buchstaben), Unterzeile ohne „Restaurant“",
   "ok": true,
   "info": ""
  },

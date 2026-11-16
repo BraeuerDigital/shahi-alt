@@ -3,6 +3,9 @@
 SHAHI Küche – Logo-Varianten erzeugen
 =====================================
 
+Statische Logo-Varianten (Kopfzeile, Fußzeile, Bon, Favicon). Das animierte Logo der Startseite
+entsteht separat aus dem Flyer-/MINAR-Logo: tools/logo/schriftzug.py + tools/logo/logo_anim.py.
+
 Grundlage ist ausschließlich das bestehende SHAHI-Logo (Spitzbogen mit „S“, Turmspitze,
 Wortmarke „SHAHI“ in Fraunces 600, „Küche“ in der Systemschrift) aus dem bisherigen Projekt
 (Sicherungs-Branch, Datei assets/img/logo.svg). Formen, Farben und Proportionen bleiben
@@ -16,7 +19,6 @@ Erzeugt in public/assets/logo/:
   shahi-logo-light.svg    gestapelt für dunkle Flächen (Fußzeile): Wortmarke hell, Bogen wie „auf Blau“
   shahi-emblem.svg        nur Bildmarke – Bestellübersicht (Bon)
   favicon.svg             Bildmarke auf Shahi-Blau (wie bisheriges Favicon)
-  shahi-logo-anim.svg     gestapelt mit Animations-Gruppen – wird von tools/build.mjs inline eingesetzt
 
 Ausführen:  python3 tools/logo/logo.py   (benötigt fontTools; WOFF2 braucht das Paket „brotli“,
             ersatzweise wird Node.js zum Entpacken genutzt)
@@ -181,21 +183,6 @@ def favicon():
     return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">{body}</svg>\n'
 
 
-# ===================== 4. Animations-Variante (inline im Hero) =====================
-def animated():
-    p = stacked_parts(cls=True)
-    ax, ay, s = p["arch"]
-    # Lichtstreif über den Bogen (nur während des Intros sichtbar, auf die Bogenform beschnitten)
-    defs = (f'<defs><clipPath id="lg-clip"><path transform="translate({ax:.2f} {ay:.2f}) scale({s})" d="{ARCH}"/></clipPath>'
-            f'<linearGradient id="lg-shine-grad" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/>'
-            f'<stop offset=".5" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>')
-    shine = (f'<g clip-path="url(#lg-clip)"><rect class="lg-shine" x="{ax - 140:.1f}" y="{ay - 40:.1f}" width="110" height="{300 * s + 80:.0f}" '
-             f'fill="url(#lg-shine-grad)" transform="skewX(-18)" opacity="0"/></g>')
-    body = defs + p["mark"] + shine + f'<g class="lg-word">{p["letters"]}</g>' + p["kueche"]
-    return (f'<svg class="shahi-logo-anim" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {p["height"]:.0f}" '
-            f'role="img" aria-label="SHAHI Küche"><title>SHAHI Küche</title>{body}</svg>\n')
-
-
 if __name__ == "__main__":
     print("Logo-Varianten →", OUT)
     write("shahi-logo.svg", horizontal())
@@ -203,4 +190,3 @@ if __name__ == "__main__":
     write("shahi-logo-light.svg", stacked(LIGHT))
     write("shahi-emblem.svg", emblem())
     write("favicon.svg", favicon())
-    write("shahi-logo-anim.svg", animated())

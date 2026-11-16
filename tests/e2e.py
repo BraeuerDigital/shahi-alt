@@ -398,9 +398,11 @@ def main():
         s = Site(browser, reduced=False)
         pg = s.go("index.html")
         check("Intro läuft", pg.evaluate("document.querySelector('.shahi-logo-anim').classList.contains('is-intro')"))
-        pg.wait_for_timeout(3900)
-        check("Intro endet nach ca. 3,4 s in der statischen Endpose", pg.evaluate("""(() => { const s = document.querySelector('.shahi-logo-anim');
-            return s.classList.contains('is-done') && !s.querySelector('.lg-arch[transform], .lg-s[transform], .lg-finial[transform], .lg-letter[transform], .lg-kueche[transform], .lg-line[stroke-dasharray], [opacity]:not(.lg-shine)'); })()"""))
+        pg.wait_for_timeout(5900)
+        check("Intro (wie MINAR, 5,5 s) endet in der Original-Silhouette", pg.evaluate("""(() => { const s = document.querySelector('.shahi-logo-anim');
+            return s.classList.contains('is-done') && getComputedStyle(s.querySelector('.mg-rig')).display === 'none' && getComputedStyle(s.querySelector('.mg-static')).display !== 'none'
+              && !s.querySelector('.lg-letter[transform], .lg-sun[transform], .lg-kueche[transform], .lg-tagline[transform]'); })()"""))
+        check("Logo-Schriftzug SHAHI (5 Buchstaben), Unterzeile ohne „Restaurant“", pg.evaluate("document.querySelectorAll('.shahi-logo-anim .lg-shahi .lg-letter').length") == 5)
         check("keine Fehler", not s.errors, s.errors[:3])
         s.close()
 

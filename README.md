@@ -3,7 +3,7 @@
 Statische Multi-Page-Website für **SHAHI Küche**, Bachgasse 17, 88400 Biberach an der Riß.
 Lieferservice · Abholung. Künftige Domain: `www.shahi-biberach.de` (noch **nicht** verknüpft).
 
-Design und Technik sind ein **originalgetreuer Nachbau des MINAR-Designsystems** (`BraeuerDigital/minar`, Stand 16.11.2026): gleiche CSS-Komponenten, gleiche Animationen, gleicher Warenkorb, gleiche Bestellstrecke. Angepasst sind nur SHAHI-Logo, Inhalte, Speisekarte, Betriebsbedingungen und Rechtstexte – Details in [`docs/ABSCHLUSSBERICHT.md`](docs/ABSCHLUSSBERICHT.md).
+Design und Technik sind ein **originalgetreuer Nachbau des MINAR-Designsystems** (`BraeuerDigital/minar`, Stand 16.11.2026): gleiche CSS-Komponenten, gleiche Animationen, gleicher Warenkorb, gleiche Bestellstrecke. Das Logo-Intro der Startseite ist die MINAR-Animation 1:1 mit dem Flyer-Logo von SHAHI (Schriftzug „SHAHI“). Angepasst sind nur Name, Inhalte, Speisekarte, Betriebsbedingungen und Rechtstexte – Details in [`docs/ABSCHLUSSBERICHT.md`](docs/ABSCHLUSSBERICHT.md).
 
 HTML, CSS und Vanilla JavaScript – keine Frameworks, keine Datenbank, kein Backend, keine externen Dienste oder Schriften.
 Hosting: **GitHub Pages** (wie bisher bei SHAHI), Veröffentlichung nur manuell – siehe [`docs/HOSTING-UND-DOMAIN.md`](docs/HOSTING-UND-DOMAIN.md).
@@ -40,10 +40,11 @@ Hosting: **GitHub Pages** (wie bisher bei SHAHI), Veröffentlichung nur manuell 
 │       └── images/illu/          eigene Illustrationen (bis Fotos vorliegen)
 ├── tools/
 │   ├── build.mjs                 Seitengenerator + Datenprüfung + Prüfpunkte-Liste
-│   ├── logo/logo.py              erzeugt die Logo-Varianten aus dem SHAHI-Logo
+│   ├── logo/logo_anim.py         Logo-Intro (1:1 MINAR) · logo/schriftzug.py: Schriftzug „SHAHI“
+│   ├── logo/logo.py              statische Logo-Varianten (Kopf, Fuß, Bon, Favicon)
 │   └── migration/                einmalige Übernahme der bisherigen SHAHI-Daten
 ├── tests/
-│   ├── e2e.py                    Browser-Tests (85 Prüfungen)
+│   ├── e2e.py                    Browser-Tests (86 Prüfungen)
 │   └── vergleich.py              Screenshots MINAR ↔ SHAHI → docs/abnahme/
 ├── docs/                         Abschlussbericht, Freigaben, Pflege, Hosting, Migration, Tests
 ├── index.html, .nojekyll         Weiterleitung nach public/ (nur Vorschau „Deploy from a branch“)
@@ -99,11 +100,15 @@ Bestellreferenz `SHA-A-YYYYMM-XXXXXXXX` (Abholung) bzw. `SHA-L-…` (Lieferung):
 
 Unverändert das MINAR-Designsystem „Future Edition“ (Orange/Grün): Farbvariablen (`--shahi-*`, Werte identisch zu `--minar-*`), Blattform-Ecken, Buttons mit Licht-Spot/Lichtstreif/Roll-Label/Magnet, sich kreuzende Laufbänder, Outline-Schriftzug im Hintergrund („SHAHI“), Kategorie-Karten mit Tilt, Gerichte mit Spotlight, gleitender Navigations-Indikator, Scroll-Fortschritt, Scrollspy. Effekte werden bei „Bewegung reduzieren“ und auf Touch-Geräten reduziert.
 
-Das Logo bleibt das bestehende SHAHI-Logo (Spitzbogen mit „S“) in seinen Originalfarben; `tools/logo/logo.py` erzeugt daraus Kopf-, Fuß-, Bon-, Favicon- und Animationsvarianten.
+Logo: Das Logo-Intro der Startseite zeigt das Logo des SHAHI-Flyers (Tier vor der Sonne, Zierlinien, Halbmond mit Stern, „SHAHI Küche“) – es ist mit dem MINAR-Logo identisch bis auf den Schriftzug. Kopfzeile, Fußzeile, Bon und Favicon zeigen derzeit das Spitzbogen-Logo der bisherigen SHAHI-Website (`tools/logo/logo.py`); Umstellung auf das Flyer-Logo siehe Freigabeliste 4.11.
 
 ## Logo-Intro (Startseite)
 
-Gleicher Mechanismus wie bei MINAR (ein `requestAnimationFrame`-Loop): Bogen → Innenlinie zeichnet sich → „S“ → Turmspitze → SHAHI (gestaffelt) → Küche, danach Lichtstreif über den Bogen und kurzer Akzent der Turmspitze. Gesamt ca. 3,4 s, keine Schleife, danach exakt das statische Logo. Ohne JavaScript oder bei „Bewegung reduzieren“ sofort statisch. Dateien: `public/assets/logo/shahi-logo-anim.svg` (inline eingesetzt), `public/assets/js/logo-anim.js`.
+**1:1 die MINAR-Animation** (`logo-anim.js` unverändert bis auf den Selektor): Logo-Aufbau (Sonne → Linien → Halbmond → SHAHI → Küche → Unterzeile) · ruhiger Stand · Aufbäumen mit dreimaligem Strampeln der Vorderläufe · Sprung in die Original-Pose · danach völlig still. Gesamt ca. 5,5 s, keine Schleife. Ohne JavaScript oder bei „Bewegung reduzieren“ sofort statisch.
+
+- Formen: MINAR-Logovorlage (`tools/logo/paths-minar.json`). Schriftzug „SHAHI“: „A“ und „I“ original, „H“ aus zwei Original-„I“, „S“ aus Bookman Demi auf die Strichstärke des Originals gebracht (`tools/logo/schriftzug.py`). Unterzeile „— LIEFERSERVICE • ABHOLUNG —“ aus der Original-Unterzeile (ohne „Restaurant“, laut Flyer Abholung und Lieferservice).
+- Dateien: `public/assets/logo/shahi-logo-anim.svg` (inline eingesetzt), `public/assets/js/logo-anim.js`.
+- Neu erzeugen: `python3 tools/logo/schriftzug.py && python3 tools/logo/logo_anim.py && node tools/build.mjs`.
 
 ## Lokal ansehen und testen
 
@@ -111,7 +116,7 @@ Gleicher Mechanismus wie bei MINAR (ein `requestAnimationFrame`-Loop): Bogen →
 cd public && python3 -m http.server 8000      # → http://localhost:8000
 node tools/build.mjs                           # Seiten erzeugen, Daten prüfen
 pip install playwright pillow && playwright install chromium
-python3 tests/e2e.py                           # 85 Browser-Prüfungen
+python3 tests/e2e.py                           # 86 Browser-Prüfungen
 python3 tests/vergleich.py /pfad/zu/minar/public   # Screenshots MINAR ↔ SHAHI
 ```
 

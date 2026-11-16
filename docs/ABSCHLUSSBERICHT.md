@@ -3,7 +3,7 @@
 Stand 16.11.2026 · Repository `BraeuerDigital/shahi-alt`, Branch `main` · Auftrag: [`MASTERPROMPT.md`](../MASTERPROMPT.md)
 Referenz: `BraeuerDigital/minar@baa0875` (nur gelesen, nicht verändert) · Ausgangszustand SHAHI: Branch `sicherung/shahi-vor-minar-2026-11-16` (= `BraeuerDigital/shahi@439c4df`)
 
-> **Status:** technisch fertig und getestet (85/85 Browser-Prüfungen), **Vor-Eröffnungsmodus**, nicht veröffentlicht, keine Domain, `noindex`. Vor dem Livegang: [`FREIGABELISTE.md`](FREIGABELISTE.md).
+> **Status:** technisch fertig und getestet (86/86 Browser-Prüfungen, Karte vollständig mit dem Flyer abgeglichen), **Vor-Eröffnungsmodus**, nicht veröffentlicht, keine Domain, `noindex`. Vor dem Livegang: [`FREIGABELISTE.md`](FREIGABELISTE.md).
 
 ## A. Von MINAR übernommene Komponenten
 
@@ -19,13 +19,14 @@ Referenz: `BraeuerDigital/minar@baa0875` (nur gelesen, nicht verändert) · Ausg
 | Speisekarte: Gesamtkarte mit Chip-Leiste und Scrollspy, Suche (auch nach Nummer), Kategorieseiten mit Blätter-Navigation, Gericht-Karten mit Nummer, Preis, Varianten, Allergenen, Zusatzstoffen, Tags, Pfand, Gericht-Dialog mit Varianten, Pflichtauswahl, Extras, Hinweis, Menge | unverändert |
 | Warenkorb (Seite und Drawer mit Wischgeste), Bestellreferenz, Mengensteuerung, Ändern/Entfernen, Summen, Getränke-Abfrage | unverändert |
 | Checkout: Bestellart, Lieferort, Angaben, Wunschzeit, „So funktioniert Ihre Bestellung“, Bon, „Weiter zu WhatsApp“, neutraler Hinweis nach dem Öffnen, „Neue Bestellung beginnen“, Druck/PDF | unverändert (Texte mit SHAHI-Daten) |
+| Logo-Intro der Startseite: SVG-Aufbau, Gelenk-Rig der Tierfigur, `logo-anim.js`, Zeiten, Posen, Endpose | 1:1 (Nachtrag 16.11.2026 auf Wunsch des Auftraggebers); Schriftzug „SHAHI“ statt „MINAR“ wie auf dem SHAHI-Flyer |
 | Rechtliche Seiten: Gestaltung (`page-legal`, `prose legal`) | übernommen, Inhalte neu für SHAHI |
 | Seitengenerator, Datenformat `menu-data.js`, Ordner `public/`, Weiterleitung im Repo-Stamm | übernommen |
 
 ## B. SHAHI-spezifische Anpassungen
 
-1. **Marke:** bestehendes SHAHI-Logo (Spitzbogen, „S“, Turmspitze, Wortmarke) unverändert in Form und Farbe; Varianten für Kopfzeile, Fußzeile (dunkler Grund), Bon, Favicon und Animation aus `tools/logo/logo.py` (Fraunces-Buchstaben als Pfade, keine eingebettete Schrift). MINAR-Tiermotiv, -Schriftzug und -Logoanimation nicht übernommen.
-2. **Logo-Intro:** MINAR-Mechanismus (rAF-Loop, Aufbau-Phase mit denselben Kurven) auf das SHAHI-Logo abgestimmt: Bogen, Innenlinie zeichnet sich, „S“, Turmspitze, Buchstaben gestaffelt, „Küche“, Lichtstreif, Akzent; 3,4 s, danach still; `prefers-reduced-motion` → statisch.
+1. **Marke:** Kopfzeile, Fußzeile (dunkler Grund), Bon und Favicon zeigen das Spitzbogen-Logo der bisherigen SHAHI-Website (`tools/logo/logo.py`, Fraunces als Pfade). Vereinheitlichung mit dem Flyer-Logo ist offen (Freigabeliste 4.11).
+2. **Logo-Intro:** MINAR-Animation 1:1 mit dem Flyer-Logo von SHAHI (das bis auf den Schriftzug dem MINAR-Logo entspricht): Schriftzug „SHAHI“ aus den Original-Buchstabenformen („A“, „I“ original, „H“ aus zwei „I“, „S“ aus Bookman Demi in Originalstärke, `tools/logo/schriftzug.py`), Unterzeile „— LIEFERSERVICE • ABHOLUNG —“ (ohne „Restaurant“), Ablauf und Dauer (5,5 s) wie MINAR.
 3. **Inhalte:** vollständige SHAHI-Speisekarte (16 Kategorien, 166 Positionen, Varianten, Extras, Beläge, Allergene, Zusatzstoffe, Pfand, Prüfpunkte) verlustfrei migriert ([`MIGRATION.md`](MIGRATION.md)); Adresse, drei Festnetznummern, WhatsApp 0179 69 500 47; Texte für Abholung und Lieferservice.
 4. **Öffnungszeiten:** Mo, Mi, Do 16:30–22:30 · Fr–So 11:00–22:30 · Di Ruhetag, Bestellschluss 22:15, Vorlauf 20/30 Min., Europe/Berlin; zusätzlich Sonderöffnungszeiten, Betriebsferien, kurzfristige Schließungen, manuelle Bestellpause.
 5. **Eröffnungsmodus:** Vor-Eröffnung (Karte sichtbar, keine Bestellanfragen) und Normalbetrieb über `operation.mode`; Livegang-Schutz bei fehlenden Pflichtangaben; sperrende Prüfpunkte („nur telefonisch“) im Normalbetrieb.
@@ -40,7 +41,8 @@ Referenz: `BraeuerDigital/minar@baa0875` (nur gelesen, nicht verändert) · Ausg
 
 | Abweichung | Grund |
 |---|---|
-| Logo in Kopf-, Fußzeile, Hero, Bon, Favicon | SHAHI-Branding; Hero-Logo auf gleiche Höhe wie MINAR skaliert, Fußzeilen-Logo 150 statt 190 px breit (gestapeltes Logo ist höher) |
+| Schriftzug „SHAHI“ und Unterzeile ohne „Restaurant“ im Logo-Intro | Restaurantname laut Flyer; Angebot laut Flyer: Abholung und Lieferservice |
+| Spitzbogen-Logo in Kopf-, Fußzeile, Bon, Favicon | bisheriges SHAHI-Logo; Fußzeilen-Logo 150 statt 190 px breit (gestapeltes Logo ist höher) – Entscheidung offen (4.11) |
 | Illustrationen statt Fotos (Galerie, Kategorieköpfe, „Über uns“), vollständig sichtbar im gleichen Rahmen, Hinweis „Illustration – kein Produktfoto“ | keine SHAHI-Fotos vorhanden; MINAR-Fotos zeigen das MINAR-Restaurant und dürfen nicht verwendet werden |
 | Kategoriebild auf allen 16 Kategorieseiten (MINAR: 5) | für jede SHAHI-Kategorie gibt es eine Illustration; gleiche Komponente |
 | Topbar-Claim „Lieferservice · Abholung · Biberach“, Service-Karte „In der Bachgasse 17“ statt „Im Restaurant“ | Restaurantbetrieb mit Sitzplätzen ist nicht belegt (Freigabe 2.7) |
@@ -65,7 +67,7 @@ Referenz: `BraeuerDigital/minar@baa0875` (nur gelesen, nicht verändert) · Ausg
 
 ## E. Getestete Funktionen
 
-85 automatisierte Browser-Prüfungen, alle bestanden ([`TESTBERICHT.md`](TESTBERICHT.md)): alle Seiten/Links, keine JS-Fehler, keine externen Anfragen, keine MINAR-Restaurantdaten, Vor-Eröffnungsmodus, Mischbestellung Speisen + Getränke (Varianten, Beilage, Extras, Pflichtauswahl, Pfand), Bearbeiten, Mengen, Zusammenführen, Abholung, Lieferung mit Gebühr und PLZ, Mindestbestellwert, Getränke-Abfrage, Referenz (stabil, A/L, neu bei neuer Bestellung, 20.000 ohne Doppelung), WhatsApp-Nachricht vollständig und ohne automatischen Versand, Datensparsamkeit, Öffnungszeiten (Ruhetag, vor Öffnung, Bestellschluss, Sommerzeit, Ausnahme, Ferien, Pause, Wunschzeiten), sperrende Prüfpunkte, Livegang-Schutz, Steueraufteilung Abholung/Lieferung, lange Nachrichten, 390/768 px ohne seitliches Scrollen, Menü, Drawer, Logo-Intro. Visueller Vergleich bei 390/768/1440 px in [`abnahme/`](abnahme/).
+86 automatisierte Browser-Prüfungen, alle bestanden ([`TESTBERICHT.md`](TESTBERICHT.md)): alle Seiten/Links, keine JS-Fehler, keine externen Anfragen, keine MINAR-Restaurantdaten, Vor-Eröffnungsmodus, Mischbestellung Speisen + Getränke (Varianten, Beilage, Extras, Pflichtauswahl, Pfand), Bearbeiten, Mengen, Zusammenführen, Abholung, Lieferung mit Gebühr und PLZ, Mindestbestellwert, Getränke-Abfrage, Referenz (stabil, A/L, neu bei neuer Bestellung, 20.000 ohne Doppelung), WhatsApp-Nachricht vollständig und ohne automatischen Versand, Datensparsamkeit, Öffnungszeiten (Ruhetag, vor Öffnung, Bestellschluss, Sommerzeit, Ausnahme, Ferien, Pause, Wunschzeiten), sperrende Prüfpunkte, Livegang-Schutz, Steueraufteilung Abholung/Lieferung, lange Nachrichten, 390/768 px ohne seitliches Scrollen, Menü, Drawer, Logo-Intro. Visueller Vergleich bei 390/768/1440 px in [`abnahme/`](abnahme/). Abgleich aller 166 Positionen mit den Flyerfotos: [`SPEISEKARTE-ABGLEICH.md`](SPEISEKARTE-ABGLEICH.md).
 
 ## F. Noch zu bestätigen
 

@@ -1138,9 +1138,8 @@ main:has(> .cta-band:last-child) + .swoosh-footer .sw-yellow { fill: #0d1307; }
 .hero-logo svg.shahi-logo-anim { display: block; width: 100%; max-width: 560px; height: auto; margin-inline: auto; overflow: visible; filter: drop-shadow(0 26px 34px rgba(21,26,14,.18)); animation: float 7s ease-in-out infinite; }
 @media (max-width: 860px) { .hero-logo svg.shahi-logo-anim { max-width: 330px; } }
 /* Logo-Intro: Logo bleibt nach dem Aufbau vollständig still (kein Schweben) */
-/* SHAHI: gestapeltes Logo (fast quadratisch) – Breite so gewählt, dass die sichtbare Höhe der des MINAR-Logos entspricht (≈ 460 px bzw. 275 px) */
-.hero-logo svg.shahi-logo-anim { animation: none; max-width: 455px; }
-@media (max-width: 860px) { .hero-logo svg.shahi-logo-anim { max-width: 272px; } }
+.hero-logo svg.shahi-logo-anim { animation: none; max-width: 640px; }
+@media (max-width: 860px) { .hero-logo svg.shahi-logo-anim { max-width: 380px; } }
 
 /* ---------- Pflichtfelder ---------- */
 .req { color: var(--orange-deep); font-weight: 800; }

@@ -9,16 +9,17 @@ Stand 16.11.2026. Sicherung des Ausgangszustands: Branch `sicherung/shahi-vor-mi
 | `public/assets/css/styles.css` | MINAR `public/assets/css/styles.css` | 1:1 übernommen; nur Umbenennungen (`--minar-*` → `--shahi-*`, `.minar-logo-anim` → `.shahi-logo-anim`, Hintergrund-Schriftzug „SHAHI“, Logo-Höhe) und der Block „SHAHI – notwendige Anpassungen“ am Ende. Farbwerte unverändert. |
 | `public/assets/js/fx.js` | MINAR | unverändert (nur Kopfkommentar) |
 | `public/assets/js/app.js` | MINAR `app.js` | Struktur, Markup-Erzeugung, Drawer, Bon, Getränke-Abfrage, Wischgesten, Referenzlogik übernommen; ergänzt um SHAHI-Logik (siehe 3.) |
-| `public/assets/js/logo-anim.js` | MINAR-Mechanismus | neu für das SHAHI-Logo (gleiche Technik und Aufbauphase, ohne Tierfigur) |
+| `public/assets/js/logo-anim.js` | MINAR `logo-anim.js` | 1:1 (nur Selektor `.shahi-logo-anim`) |
+| `public/assets/logo/shahi-logo-anim.svg` | MINAR `tools/logo_anim.py` + `tools/paths.json` | Flyer-Logo = MINAR-Logo; Schriftzug „SHAHI“ und Unterzeile über `tools/logo/schriftzug.py` |
 | `tools/build.mjs` | MINAR `tools/build.mjs` | gleiche Bausteine und Klassen; Inhalte, Rechtstexte, SHAHI-Seiten, Datenprüfung ergänzt |
 | `public/assets/js/menu-data.js` | SHAHI `data/menu.json` + `data/config.json` | verlustfrei in das MINAR-Format übertragen (`tools/migration/shahi-v1-zu-menu-data.mjs`) |
-| Logo | SHAHI `assets/img/logo.svg` | unverändert in Form und Farbe; Varianten durch `tools/logo/logo.py` |
+| Logo (Kopf, Fuß, Bon, Favicon) | SHAHI `assets/img/logo.svg` | unverändert in Form und Farbe; Varianten durch `tools/logo/logo.py` |
 | Illustrationen | SHAHI `assets/img/illustrationen.svg` | als Einzeldateien `public/assets/images/illu/*.svg` |
 | Favicons (PNG) | SHAHI `assets/img/favicon-32.png`, `apple-touch-icon.png` | übernommen |
 | Rechtstext-Entwürfe | MINAR-Aufbau + SHAHI-Entwürfe | neu zusammengeführt, auf GitHub Pages und SHAHI-Daten angepasst |
 | WhatsApp-Schnellantworten | MINAR `docs/` | auf SHAHI angepasst |
 
-Nicht übernommen von MINAR: Logo/Tiermotiv, Logo-Animation des Tiers, Fotos (Gastraum, Theke, Gerichte), Kontaktdaten, Adresse, Öffnungszeiten, Liefergebiete, Preise, Speisekarte, Inhaber- und Steuerdaten, Rechtstexte, Cloudflare-Dateien (`_headers`), Google-Bewertungslink.
+Nicht übernommen von MINAR: Schriftzug „MINAR“, Fotos (Gastraum, Theke, Gerichte), Kontaktdaten, Adresse, Öffnungszeiten, Liefergebiete, Preise, Speisekarte, Inhaber- und Steuerdaten, Rechtstexte, Cloudflare-Dateien (`_headers`), Google-Bewertungslink.
 
 ## 2. Entfernte bisherige SHAHI-Implementierung
 
