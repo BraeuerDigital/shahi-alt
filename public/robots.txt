@@ -1,0 +1,4 @@
+# Vorschau-/Vorabversion: bitte nicht indexieren.
+# Nach Freigabe und Domain-Anbindung: operation.indexable = true in menu-data.js, dann node tools/build.mjs.
+User-agent: *
+Disallow: /

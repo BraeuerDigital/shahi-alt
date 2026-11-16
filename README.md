@@ -1,94 +1,120 @@
-# SHAHI Küche Biberach – Website
+# SHAHI Küche – Website
 
-Website mit digitaler Speisekarte, Warenkorb und WhatsApp-Bestellstrecke für **SHAHI Küche**, Bachgasse 17, 88400 Biberach an der Riß.
-Umsetzung: Bräuer.Digital · Stand: 15.11.2026
+Statische Multi-Page-Website für **SHAHI Küche**, Bachgasse 17, 88400 Biberach an der Riß.
+Lieferservice · Abholung. Künftige Domain: `www.shahi-biberach.de` (noch **nicht** verknüpft).
 
-> **Status: Vor-Eröffnungsmodus, nicht produktionsreif freigegeben.**
-> Die Website ist technisch vollständig und getestet. Vor dem öffentlichen Betrieb fehlen Betreiberangaben (Impressum), Zahlungsarten, der Umsatzsteuer-Status und die rechtliche Prüfung – siehe [`docs/FREIGABELISTE.md`](docs/FREIGABELISTE.md). Die Domain `shahi-biberach.de` ist **bewusst nicht verknüpft**.
+Design und Technik sind ein **originalgetreuer Nachbau des MINAR-Designsystems** (`BraeuerDigital/minar`, Stand 16.11.2026): gleiche CSS-Komponenten, gleiche Animationen, gleicher Warenkorb, gleiche Bestellstrecke. Angepasst sind nur SHAHI-Logo, Inhalte, Speisekarte, Betriebsbedingungen und Rechtstexte – Details in [`docs/ABSCHLUSSBERICHT.md`](docs/ABSCHLUSSBERICHT.md).
 
-## Auf einen Blick
+HTML, CSS und Vanilla JavaScript – keine Frameworks, keine Datenbank, kein Backend, keine externen Dienste oder Schriften.
+Hosting: **GitHub Pages** (wie bisher bei SHAHI), Veröffentlichung nur manuell – siehe [`docs/HOSTING-UND-DOMAIN.md`](docs/HOSTING-UND-DOMAIN.md).
 
-| Bereich | Stand |
-|---|---|
-| Speisekarte: 153 Gerichte + 13 Getränke aus beiden Flyerfotos, Preise, Varianten, Allergene, Zusatzstoffe | umgesetzt und getestet |
-| Suche (Name, Zutat, Nummer), Filter vegetarisch/scharf, Kategorieseiten mit eigener SEO | umgesetzt und getestet |
-| Warenkorb (Varianten, Extras, Hinweise, Mengen, Ändern, Entfernen, Zusammenführen, Cent-genaue Rechnung) | umgesetzt und getestet |
-| Bestellstrecke Warenkorb → Bestellart → Adresse → Kontakt → Wunschzeit → Übersicht → WhatsApp | umgesetzt und getestet |
-| Liefergebiet, Mindestbestellwert, Lieferkosten, Pfand, Steueraufteilung 7 %/19 % | umgesetzt und getestet – Orte, Pfand, Steuerstatus **vom Betreiber zu bestätigen** |
-| Öffnungszeiten Europe/Berlin inkl. Sommer-/Winterzeit, Bestellschluss, Ausnahmen, Ferien, Pausen | umgesetzt und getestet – Zeiten laut Flyer **vorläufig** |
-| Eröffnungsmodus (vor Eröffnung / geöffnet) über eine Zeile in `data/config.json` | umgesetzt und getestet |
-| Livegang-Schutz: ohne Impressum, Zahlungsarten, Steuerstatus keine Online-Bestellung | umgesetzt und getestet |
-| Impressum, Datenschutz, Bestell- und Verbraucherinformationen, Allergenübersicht | Entwürfe mit markierten Platzhaltern – **rechtlich zu prüfen** |
-| SEO: Meta, Canonical, Open Graph, Schema.org `Restaurant`, Sitemap, robots | technisch vorbereitet – `noindex` bis zur Freigabe |
-| Bondrucker, Bestellverwaltung, Online-Zahlung | für spätere Erweiterung vorgesehen ([`docs/ARCHITEKTUR.md`](docs/ARCHITEKTUR.md)) |
+> **Status: Vor-Eröffnungsmodus.** Die Speisekarte ist sichtbar, Bestellanfragen sind gesperrt. Vor dem Livegang fehlen Betreiberangaben, Zahlungsarten, Steuerstatus, bestätigte Liefergebiete und die rechtliche Freigabe – siehe [`docs/FREIGABELISTE.md`](docs/FREIGABELISTE.md). Alle Seiten sind `noindex`.
 
-## Technik
+## Seiten
 
-Statische Website ohne Server, Datenbank, Framework oder externe Dienste: HTML, CSS, Vanilla JavaScript. Keine Cookies, kein Tracking, keine fremden Schriften oder Skripte – daher kein Cookie-Banner (Begründung in [`docs/RECHTLICHES.md`](docs/RECHTLICHES.md)). Hosting: GitHub Pages.
+| URL | Inhalt |
+|-----|--------|
+| `index.html` | Startseite (Hero mit animiertem Logo, Vorstellung, Galerie, Lieferservice, Öffnungszeiten, CTA) |
+| `speisekarte/index.html` | komplette Speisekarte mit Kategorie-Sprungleiste, Scrollspy und Suche (`?q=` möglich) |
+| `speisekarte/<kategorie>.html` | 16 Kategorieseiten, z. B. `pizza.html`, `burger.html`, `doener.html` |
+| `bestellen.html` | Warenkorb „Deine Bestellung“, Angaben, Bestellübersicht im Bon-Stil, WhatsApp |
+| `lieferservice.html` | Entfernungszonen, Mindestbestellwerte, Lieferkosten, Zeiten |
+| `ueber-uns.html`, `kontakt.html` | Vorstellung; Adresse, Telefon, WhatsApp, Öffnungszeiten, Google-Maps-Link |
+| `bestellinformationen.html` | Bestell- und Verbraucherinformationen inkl. Liefer- und Zahlungsbedingungen (Entwurf) |
+| `allergene.html` | Allergene und Zusatzstoffe aller Gerichte (auch ohne JavaScript lesbar) |
+| `impressum.html`, `datenschutz.html` | Entwürfe mit markierten Platzhaltern |
+| `404.html` | Fehlerseite (am Domain-Stamm) |
+
+## Struktur
 
 ```text
-├── index.html, lieferung.html, restaurant.html, bestellen.html,      ← erzeugte Seiten
-│   allergene.html, bestellinformationen.html, impressum.html,           (nicht von Hand bearbeiten)
-│   datenschutz.html, 404.html, speisekarte/*.html
-├── data/
-│   ├── config.json      ← Betrieb, Öffnungszeiten, Lieferung, Kontakt, Betreiber, Steuer, Bestellung
-│   └── menu.json        ← Speisekarte: Kategorien, Optionsgruppen, Produkte, Legende
-├── assets/
-│   ├── css/shahi.css    ← Designsystem
-│   ├── js/core.js       ← Rechenregeln (Preise, Steuer, Liefergebiet, Zeiten, Referenz, Nachricht) – in Node testbar
-│   ├── js/view.js       ← HTML-Bausteine der Speisekarte (Build und Browser identisch)
-│   ├── js/app.js        ← Oberfläche: Menü, Suche, Dialoge, Warenkorb, Bestellstrecke
-│   ├── fonts/           ← Fraunces 600 (SIL OFL 1.1, Lizenz liegt bei)
-│   └── img/             ← Logo, Favicons, Illustrationen (eigene Gestaltung), OG-Bild
-├── tools/build.mjs      ← Seitengenerator (+ report.mjs für die Prüfliste)
-├── tools/render-assets.mjs ← PNG-Icons/OG-Bild neu erzeugen (nur bei Gestaltungsänderungen)
-├── tests/               ← Unit-Tests (node:test) und Browser-Tests (Playwright)
-└── docs/                ← Anleitungen, Freigabeliste, Testbericht, Recht, Marke
+├── public/                       ← wird veröffentlicht
+│   ├── *.html, speisekarte/*.html  erzeugte Seiten (nicht von Hand bearbeiten)
+│   └── assets/
+│       ├── css/styles.css        MINAR-Designsystem 1:1 + Block „SHAHI – notwendige Anpassungen“
+│       ├── js/menu-data.js       ALLE Inhalte: Betrieb, Restaurant, Zeiten, Lieferzonen, Zahlung, Steuer, Gerichte
+│       ├── js/app.js             Navigation, Öffnungsstatus, Speisekarte, Suche, Warenkorb, Bon, WhatsApp
+│       ├── js/fx.js              Interaktions-Effekte (unverändert von MINAR)
+│       ├── js/logo-anim.js       Logo-Intro der Startseite
+│       ├── logo/                 SHAHI-Logo-Varianten, Favicons
+│       └── images/illu/          eigene Illustrationen (bis Fotos vorliegen)
+├── tools/
+│   ├── build.mjs                 Seitengenerator + Datenprüfung + Prüfpunkte-Liste
+│   ├── logo/logo.py              erzeugt die Logo-Varianten aus dem SHAHI-Logo
+│   └── migration/                einmalige Übernahme der bisherigen SHAHI-Daten
+├── tests/
+│   ├── e2e.py                    Browser-Tests (85 Prüfungen)
+│   └── vergleich.py              Screenshots MINAR ↔ SHAHI → docs/abnahme/
+├── docs/                         Abschlussbericht, Freigaben, Pflege, Hosting, Migration, Tests
+├── index.html, .nojekyll         Weiterleitung nach public/ (nur Vorschau „Deploy from a branch“)
+└── MASTERPROMPT.md               Auftrag
 ```
 
-## Lokal ansehen
+## Inhalte pflegen
+
+**Preise und Gerichte:** nur `public/assets/js/menu-data.js` bearbeiten – die Seiten lesen die Daten beim Aufruf. Danach zur Kontrolle `node tools/build.mjs` (prüft die Daten, erzeugt die Allergenübersicht neu).
+
+**Öffnungszeiten, Lieferzonen, Zahlung, Betreiber, Eröffnung, Seitentexte oder neue Kategorie:** `menu-data.js` bzw. `tools/build.mjs` anpassen und neu erzeugen:
 
 ```bash
-python3 -m http.server 8000      # im Repository-Ordner → http://localhost:8000
+node tools/build.mjs
 ```
 
-Ein lokaler Server ist nötig (Speisekarte und Illustrationen werden nachgeladen); ein Doppelklick auf die HTML-Datei reicht nicht.
+(Node.js ≥ 16, keine Pakete nötig.) Anleitung für den Betrieb: [`docs/BETRIEB-UND-PFLEGE.md`](docs/BETRIEB-UND-PFLEGE.md).
 
-## Ändern, bauen, testen
+Aufbau eines Gerichts (wie MINAR, erweitert um ID, Füllmenge, Steuerart und Prüfpunkte):
+
+```js
+{ id: "burger-hamburgerle", nr: "20", cat: "burger", name: "Hamburgerle",
+  desc: "100 g Rindfleisch-Patty und Smoky Cocktailsoße",
+  prices: [5.5],                       // oder [["klein", 4.9], ["groß", 6.9]], Getränke [["0,5 l", 2.5, 500]]
+  codes: "A,C,G,F,J,6,7,8",            // Buchstaben = Allergene, Zahlen = Zusatzstoffe
+  opts: ["burger-beilage", "burger-extras"] }
+// Getränke: pfand: 0.25 (null = unbekannt → online nicht bestellbar)
+// checks: [{ field, note, blocks: true }] = offener Prüfpunkt; blocks sperrt im Normalbetrieb die Online-Bestellung
+```
+
+## Eröffnung
+
+`operation.mode` in `menu-data.js`:
+
+- `"vor-eroeffnung"` – Speisekarte sichtbar, Warenkorb zum Ausprobieren, **keine** Bestellübersicht/WhatsApp.
+- `"geoeffnet"` – Normalbetrieb. Die Online-Bestellung schaltet sich aber erst frei, wenn Betreibername, Rechtsform, E-Mail, Zahlungsarten und Umsatzsteuer-Status eingetragen sind (Livegang-Schutz).
+
+Bestellpause, Sonderöffnungszeiten, Betriebsferien und kurzfristige Schließungen stehen unter `hours`.
+
+## Bestellablauf (WhatsApp)
+
+1. Gerichte in der Speisekarte wählen und konfigurieren (Größe, Beilage, Extras, Beläge, Hinweis).
+2. Warenkorb „Deine Bestellung“ (Seite oder Drawer): Menge (− / +, bei 1 entfernt „−“ die Position), „Ändern“, „Entfernen“.
+3. Abholung oder Lieferung (nur bestätigte Orte), Angaben, Wunschzeit („so schnell wie möglich“ oder heute im 15-Min.-Raster, Vorlauf 20 Min. Abholung / 30 Min. Lieferung).
+4. „Weiter zur Übersicht“ (ggf. vorher Getränke-Abfrage) → Bestellübersicht im Bon-Stil.
+5. „Weiter zu WhatsApp“ öffnet WhatsApp mit der Nachricht an 0179 69 500 47; der Kunde sendet selbst. Keine Erfolgsmeldung – SHAHI bestätigt individuell. Ausweg: „Bestelltext kopieren“.
+
+Berechnung zentral in `app.js` (`lineCalc`, `totals`, `taxBreakdown`) in **ganzen Cent**: Warenwert, Getränkepfand, Lieferkosten je Zone; Mindestbestellwert zählt nur den Warenwert. Steuer: Speisen 7 %, Getränke 19 %, Pfand wie Getränk, Lieferkosten anteilig – wird nur ausgewiesen, wenn der Steuerstatus bestätigt und `tax.show` gesetzt ist; aufgeschlagen wird nie etwas.
+
+Bestellreferenz `SHA-A-YYYYMM-XXXXXXXX` (Abholung) bzw. `SHA-L-…` (Lieferung): 8 Zeichen aus `23456789ABCDEFGHJKLMNPQRSTUVWXYZ` via `crypto.getRandomValues()`, stabil für den Bestellentwurf. Datensparsamkeit: localStorage `shahi-cart-v1` nur Gerichtsauswahl (12 h), sessionStorage `shahi-form-v1` Kontaktangaben (endet mit dem Tab).
+
+## Designgrundlage
+
+Unverändert das MINAR-Designsystem „Future Edition“ (Orange/Grün): Farbvariablen (`--shahi-*`, Werte identisch zu `--minar-*`), Blattform-Ecken, Buttons mit Licht-Spot/Lichtstreif/Roll-Label/Magnet, sich kreuzende Laufbänder, Outline-Schriftzug im Hintergrund („SHAHI“), Kategorie-Karten mit Tilt, Gerichte mit Spotlight, gleitender Navigations-Indikator, Scroll-Fortschritt, Scrollspy. Effekte werden bei „Bewegung reduzieren“ und auf Touch-Geräten reduziert.
+
+Das Logo bleibt das bestehende SHAHI-Logo (Spitzbogen mit „S“) in seinen Originalfarben; `tools/logo/logo.py` erzeugt daraus Kopf-, Fuß-, Bon-, Favicon- und Animationsvarianten.
+
+## Logo-Intro (Startseite)
+
+Gleicher Mechanismus wie bei MINAR (ein `requestAnimationFrame`-Loop): Bogen → Innenlinie zeichnet sich → „S“ → Turmspitze → SHAHI (gestaffelt) → Küche, danach Lichtstreif über den Bogen und kurzer Akzent der Turmspitze. Gesamt ca. 3,4 s, keine Schleife, danach exakt das statische Logo. Ohne JavaScript oder bei „Bewegung reduzieren“ sofort statisch. Dateien: `public/assets/logo/shahi-logo-anim.svg` (inline eingesetzt), `public/assets/js/logo-anim.js`.
+
+## Lokal ansehen und testen
 
 ```bash
-node tools/build.mjs                          # Seiten, Sitemap, Prüfliste neu erzeugen (Node ≥ 18, keine Pakete)
-node --test tests/unit.test.mjs               # 23 Unit-Tests der Rechenregeln und Daten
-npm install --no-save playwright && npx playwright install chromium
-node --test tests/e2e.test.mjs                # 12 Browser-Tests (mobil/desktop, Bestellstrecke, Zeiten)
+cd public && python3 -m http.server 8000      # → http://localhost:8000
+node tools/build.mjs                           # Seiten erzeugen, Daten prüfen
+pip install playwright pillow && playwright install chromium
+python3 tests/e2e.py                           # 85 Browser-Prüfungen
+python3 tests/vergleich.py /pfad/zu/minar/public   # Screenshots MINAR ↔ SHAHI
 ```
 
-- **Preise und Gerichte:** [`docs/BETRIEB-UND-PFLEGE.md`](docs/BETRIEB-UND-PFLEGE.md) – Kurzfassung: `data/menu.json` bearbeiten, `node tools/build.mjs`, Tests, committen.
-- **Eröffnung schalten:** in `data/config.json` `"modus": "vor-eroeffnung"` → `"geoeffnet"` (wirkt erst, wenn die Livegang-Angaben vollständig sind).
-- **Veröffentlichen und Domain:** [`docs/GITHUB-PAGES-UND-DOMAIN.md`](docs/GITHUB-PAGES-UND-DOMAIN.md).
+## Sicherung des vorherigen Stands
 
-## Bestellablauf
-
-1. Gericht wählen; Größe, Beilage, Extras, Hinweis im Dialog. Preis aktualisiert sich bei jeder Änderung.
-2. Warenkorb: gleiche Konfiguration wird zusammengefasst, abweichende Varianten bleiben getrennt. Gespeichert wird nur die Auswahl (localStorage, 12 h); Name, Telefon und Adresse nur für die Sitzung (sessionStorage).
-3. Abholung oder Lieferung. Lieferung nur in bestätigten Orten; Mindestbestellwert zählt den Warenwert ohne Pfand und Lieferkosten; fehlender Betrag wird angezeigt.
-4. Kontakt, Wunschzeit („so schnell wie möglich“ oder heute im 15-Minuten-Raster mit Vorlauf). Keine Vorbestellung außerhalb der Bestellzeiten.
-5. Übersicht im Bon-Stil mit Referenz `SHA-A-YYYYMM-XXXXXXXX` (Abholung) bzw. `SHA-L-…` (Lieferung), alles korrigierbar.
-6. „Zahlungspflichtig bestellen“ öffnet WhatsApp (`wa.me/491796950047`) mit der fertigen Nachricht. Gesendet wird erst durch den Kunden; die Website behauptet keinen Erfolg. Das Restaurant bestätigt individuell.
-
-Vor dem Öffnen von WhatsApp wird mit der aktuellen Uhrzeit erneut geprüft (lange offener Tab). Fallback: Bestelltext kopieren, Telefon.
-
-## Dokumentation
-
-| Datei | Inhalt |
-|---|---|
-| [`docs/FREIGABELISTE.md`](docs/FREIGABELISTE.md) | alles, was der Betreiber bestätigen bzw. rechtlich geprüft werden muss |
-| [`docs/PRUEFPUNKTE-SPEISEKARTE.md`](docs/PRUEFPUNKTE-SPEISEKARTE.md) | automatisch erzeugte Liste der offenen Punkte je Gericht |
-| [`docs/SPEISEKARTE-ERFASSUNG.md`](docs/SPEISEKARTE-ERFASSUNG.md) | wie die Flyer ausgelesen wurden, Auffälligkeiten, Interpretationen |
-| [`docs/BETRIEB-UND-PFLEGE.md`](docs/BETRIEB-UND-PFLEGE.md) | Preise, Gerichte, Öffnungszeiten, Pausen, Liefergebiet, Testmodus |
-| [`docs/GITHUB-PAGES-UND-DOMAIN.md`](docs/GITHUB-PAGES-UND-DOMAIN.md) | Veröffentlichung und spätere Verknüpfung mit `shahi-biberach.de` |
-| [`docs/RECHTLICHES.md`](docs/RECHTLICHES.md) | technische Einordnung der Rechtsfragen und Freigabepunkte (keine Rechtsberatung) |
-| [`docs/TESTBERICHT.md`](docs/TESTBERICHT.md) | durchgeführte Tests, Ergebnisse, offene Punkte |
-| [`docs/MARKE.md`](docs/MARKE.md) | Markenidentität: Logo, Farben, Schrift, Formen, Illustrationen |
-| [`docs/ARCHITEKTUR.md`](docs/ARCHITEKTUR.md) | Aufbau, Datenmodell, Erweiterungen (Bondrucker, Verwaltung, Zahlung) |
-| [`docs/GOOGLE-UNTERNEHMENSPROFIL.md`](docs/GOOGLE-UNTERNEHMENSPROFIL.md) | vorbereitete Angaben für die manuelle Einrichtung |
+Der bisherige SHAHI-Stand (eigenes Design, `BraeuerDigital/shahi@439c4df`) liegt unverändert im Branch **`sicherung/shahi-vor-minar-2026-11-16`**. Das MINAR-Repository wurde nicht verändert.

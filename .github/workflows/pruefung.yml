@@ -1,8 +1,16 @@
 name: Prüfung
 
+# Prüft bei jedem Push die Speisekarte (Seitengenerator bricht bei Datenfehlern ab)
+# und die JavaScript-Syntax. Die Browser-Tests laufen nur auf Anforderung (Actions → Prüfung → Run workflow).
 on:
   push:
   pull_request:
+  workflow_dispatch:
+    inputs:
+      browser_tests:
+        description: "Browser-Tests (Playwright) ausführen"
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -17,12 +25,24 @@ jobs:
           node-version: 22
       - name: Speisekarte prüfen und Seiten erzeugen
         run: node tools/build.mjs
-      - name: Erzeugte Seiten aktuell?
+      - name: JavaScript-Syntax
+        run: for f in public/assets/js/*.js; do node --check "$f"; done
+      - name: Keine MINAR-Restaurantdaten
         run: |
-          if ! git diff --quiet; then
-            echo "::error::Die erzeugten Seiten passen nicht zu data/*.json – bitte lokal 'node tools/build.mjs' ausführen und committen."
-            git --no-pager diff --stat
-            exit 1
-          fi
-      - name: Unit-Tests
-        run: node --test tests/unit.test.mjs
+          if grep -rnE "Bad Buchau|Schussenrieder|07582|0163 359|491633590188|minarbuchau|minar-cart" public; then
+            echo "::error::MINAR-Restaurantdaten in public/ gefunden"; exit 1; fi
+  browser:
+    if: github.event_name == 'workflow_dispatch' && inputs.browser_tests
+    needs: pruefen
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install playwright pillow && python -m playwright install --with-deps chromium
+      - run: node tools/build.mjs
+      - run: python tests/e2e.py

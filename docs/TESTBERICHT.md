@@ -1,110 +1,150 @@
 # Testbericht
 
-Stand: 15.11.2026 · Umgebung: Node 22, Chrome (headless) über Playwright 1.63, lokaler Server mit GitHub-Pages-Verhalten (Verzeichnis → index.html, unbekannte Pfade → 404.html mit Status 404). Rechner-Zeitzone im Browser bewusst **UTC**, damit die Umrechnung nach Europe/Berlin geprüft wird. Uhrzeiten über `page.clock` fest eingestellt.
+Stand 16.11.2026 · Headless Chrome (Playwright 1.63) gegen `public/` über einen lokalen Server · Uhrzeit im Browser simuliert (Europe/Berlin).
+Ausführen: `node tools/build.mjs && python3 tests/e2e.py` · Ergebnisdatei: [`tests/ergebnis.json`](../tests/ergebnis.json).
 
-**Ergebnis: 35 von 35 Tests bestanden** (23 Unit-Tests, 12 Browser-Tests). Wiederholbar mit:
+**Ergebnis: 85 von 85 Prüfungen bestanden.**
 
-```bash
-node --test tests/unit.test.mjs
-node --test tests/e2e.test.mjs        # benötigt Playwright + Chromium
-```
+Für den Normalbetrieb werden die Daten nur im Test ergänzt (Betreiberangaben, Zahlung bar, Steuerstatus, bestätigte Lieferorte; in C/D/F/G zusätzlich alle Prüfpunkte als bestätigt). Teil B und E prüfen die echten, migrierten Daten.
 
-Für Live-Szenarien setzen die Browser-Tests eine vollständig freigegebene Konfiguration (Testdaten für Betreiber, Zahlung, Steuer, bestätigte Orte und Prüfpunkte) nur im Test ein – die Daten im Repository bleiben unverändert im Vor-Eröffnungsmodus.
+## Funktionsprüfungen
 
-## Speisekarte
+### A. Seiten und Links
 
-| Prüfung | Ergebnis |
-|---|---|
-| alle Flyerprodukte vorhanden: 153 Gerichte + 13 Getränke, Anzahl je Kategorie wie Flyer | ✔ |
-| Preise: 97 Stichproben über alle Kategorien + alle Variantenpreise (Potatoes, Platten, Softdrinks) | ✔ |
-| keine doppelten internen IDs, keine doppelten Artikelnummern, Buchstabenzusätze (96a, 98a/b, 99a, 129a, 134a) | ✔ |
-| IDs sind keine Artikelnummern | ✔ |
-| Allergene/Zusatzstoffe zugeordnet, nur Codes aus der Legende; Lücken/Widersprüche als „wird geprüft“ | ✔ |
-| Suche nach Nummer (96a), Begriff (Butter Chicken), Umlaut-Varianten (duerum), Filter vegetarisch | ✔ |
-| Datenvalidierung bricht den Build bei Fehlern ab | ✔ |
+- ✅ 27 Seiten ohne JavaScript-Fehler
+- ✅ keine externen Anfragen beim Seitenaufruf
+- ✅ alle 54 internen Links und Dateien erreichbar
+- ✅ keine MINAR-Restaurantdaten in Seiten und app.js
 
-## Warenkorb
+### B. Vor-Eröffnungsmodus
 
-| Prüfung | Ergebnis |
-|---|---|
-| einzelnes Produkt, mehrere verschiedene, mehrere identische (Salami 2 × → eine Zeile, Menge 2) | ✔ |
-| gleiches Produkt mit verschiedenen Varianten getrennt (Pommes klein/groß) | ✔ |
-| Preisänderung durch Extras live im Dialog ((11,50 + 3,50 + 1,00) × 2 = 32,00 €) | ✔ |
-| Menge erhöhen/verringern, Entfernen, Ändern (Variante ändern → verschmilzt mit identischer Zeile) | ✔ |
-| Warenkorb bleibt beim Seitenwechsel und Neuladen erhalten | ✔ |
-| Cent-Rechnung ohne Gleitkommafehler, Formatierung „1.234,56 €“ | ✔ |
-| ungültige/manipulierte Auswahl wird bereinigt; Pflichtauswahl (4 Beläge) erzwungen; Menge 1–50 | ✔ |
-| localStorage enthält keine Namen, Telefonnummern oder Adressen | ✔ |
+- ✅ Status „Eröffnung in Vorbereitung“
+- ✅ Speisekarte sichtbar, Gericht in den Warenkorb
+- ✅ Warenkorb-Drawer öffnet
+- ✅ Bestellarten gesperrt
+- ✅ Hinweis: Bestellung ab Eröffnung
+- ✅ keine Bestellübersicht / kein WhatsApp im Vor-Eröffnungsmodus
+- ✅ keine Fehler
 
-## Lieferung und Abholung
+### C. Bestellung im Normalbetrieb (Montag 18:00)
 
-| Prüfung | Ergebnis |
-|---|---|
-| Biberach 15 €/1 €, bis 7 km 25 €/2 €, 7–12 km 45 €/3 € | ✔ |
-| knapp unter Mindestbestellwert (14,99 €, 24,99 €, 44,99 €) gesperrt mit Fehlbetrag; genau auf dem Wert (15,00 €, 45,00 €) erlaubt | ✔ |
-| Pfand und Lieferkosten zählen nicht zum Mindestbestellwert | ✔ |
-| Bestellstrecke Lieferung: 14,30 € → „es fehlen noch 0,70 €“; nach Ergänzung 15,30 € + 1,00 € = 16,30 € | ✔ |
-| Adresse ohne Hausnummer, PLZ passt nicht zum Ort, Ort außerhalb → Fehlermeldung | ✔ |
-| nur bestätigte Orte wählbar; ohne bestätigte Orte ist Lieferung deaktiviert (Abholung bleibt) | ✔ |
-| Abholung: keine Adresse, keine Lieferkosten, Adressschritt übersprungen | ✔ |
+- ✅ Status geöffnet, Bestellschluss 22:15
+- ✅ Dialogpreis Burger 10,00 €
+- ✅ Party-Pizza: Pflichtauswahl 4 Beläge
+- ✅ ohne 4 Beläge nicht hinzufügbar
+- ✅ 5. Belag gesperrt (max 4)
+- ✅ Grundpreis je Liter bei Getränken
+- ✅ 5 Positionen (Salami zusammengeführt)
+- ✅ Salami Menge 2
+- ✅ Warenwert 66,80 €
+- ✅ Pfand 0,25 € separat
+- ✅ Gesamt Abholung 67,05 €
+- ✅ Referenz SHA-A-YYYYMM-XXXXXXXX
+- ✅ Menge + aktualisiert Summe
+- ✅ Bearbeiten übernimmt Variante
+- ✅ Pflichtfelder werden markiert
+- ✅ Bestellübersicht (Bon) öffnet
+- ✅ Bon: SHAHI, Adresse, Referenz
+- ✅ Bon: Positionen mit Extras und Pfand
+- ✅ Bon: Gesamt bar 67,05 €
+- ✅ WhatsApp-Link an 0179 69 500 47
+- ✅ Nachricht vollständig
+- ✅ keine geschützten Leerzeichen in der Nachricht
+- ✅ „Weiter zu WhatsApp“ öffnet nur wa.me (kein Versand durch die Website)
+- ✅ neutraler Hinweis, keine Erfolgsmeldung
+- ✅ localStorage ohne Name/Telefon
+- ✅ Formular nur im sessionStorage
+- ✅ keine MINAR-Schlüssel
+- ✅ Referenz nach Neuladen identisch
+- ✅ Lieferung: SHA-L mit gleicher Kennung
+- ✅ Liefergebühr bis 7 km: 2,00 €
+- ✅ Gesamt Lieferung 69,05 €
+- ✅ Hausnummer wird verlangt
+- ✅ Lieferadresse mit PLZ und Ort
+- ✅ Liefergebühr in der Nachricht
+- ✅ „Neue Bestellung“ leert Warenkorb und führt zur Speisekarte
+- ✅ neue Bestellung → neue Referenz
+- ✅ Mindestbestellwert 15 € sperrt (7,90 €)
+- ✅ Getränke-Abfrage bei Bestellung ohne Getränk
+- ✅ danach Bestellübersicht
+- ✅ keine Fehler im Bestellablauf
 
-## Zeitsteuerung (Europe/Berlin)
+### D. Öffnungszeiten
 
-| Prüfung | Ergebnis |
-|---|---|
-| geöffnet (Mo 18:00), vor Öffnung (Mo 16:00), Bestellschluss (22:15), geschlossen (22:31) | ✔ |
-| Dienstag Ruhetag mit Hinweis „wieder morgen ab 16:30 Uhr“ | ✔ |
-| Sommerzeit (01.07.), Winterzeit (18.11.), beide Umstellungstage (29.03., 25.10.) | ✔ |
-| Referenzmonat nach Berliner Zeit (31.12. 23:30 UTC → 202701) | ✔ |
-| Sonderöffnung am Ruhetag, geschlossener Feiertag, Betriebsferien, kurzfristige Schließung (mit „heute ab 19:00“), Bestellpause | ✔ |
-| Wunschzeiten: 15-Min.-Raster, Vorlauf 20/30 Min., späteste 22:30, keine Vorbestellung | ✔ |
-| im Browser: Ruhetag und nach Bestellschluss → Banner, Übersicht gesperrt; Sommerzeit geöffnet | ✔ |
-| Vor-Eröffnungsmodus: Karte sichtbar, keine Bestellbuttons, kein Warenkorb, Hinweis auf Eröffnung | ✔ |
-| Live-Modus ohne Betreiberangaben: Bestellung gesperrt (Livegang-Schutz) | ✔ |
+- ✅ Dienstag: Ruhetag, öffnet morgen 16:30
+- ✅ Montag 16:00: geschlossen, öffnet heute 16:30
+- ✅ Montag 22:20: Bestellschluss vorbei
+- ✅ Freitag 11:05: geöffnet
+- ✅ Sommerzeit (MESZ) Montag 18:00: geöffnet
+- ✅ Sonderöffnungszeit: geschlossen mit Hinweis
+- ✅ Betriebsferien: nächste Öffnung danach
+- ✅ Bestellpause sperrt beide Bestellarten
+- ✅ Bestellpause: Hinweis
+- ✅ Wunschzeit Abholung: ab 18:30 (20 Min. Vorlauf, 15-Min.-Raster) bis 22:30
+- ✅ Wunschzeit Lieferung: ab 18:30 (30 Min. Vorlauf)
+- ✅ nach Bestellschluss keine Bestellung
 
-## WhatsApp
+### E. Sperrende Prüfpunkte (Normalbetrieb, Daten wie migriert)
 
-| Prüfung | Ergebnis |
-|---|---|
-| Empfänger `https://wa.me/491796950047` (0179 69 500 47 international) | ✔ |
-| Nachricht enthält Restaurant, Referenz, Bestellart, Name, Telefon, Adresse, Fahrerhinweis, Wunschzeit, Artikelnummern, Produkte, Mengen, Varianten, Extras, Einzelpreise, Warenwert, Lieferkosten, Pfand, Gesamt, Anmerkung | ✔ |
-| keine geschützten Leerzeichen, korrekte URL-Kodierung (Hin- und Rückkodierung identisch) | ✔ |
-| Abholung/Lieferung korrekt gekennzeichnet (SHA-A/SHA-L) | ✔ |
-| Referenz in Übersicht, Seitenleiste, Nachricht und Hinweis nach dem Öffnen identisch; bleibt beim erneuten Öffnen gleich; „Neue Bestellung“ erzeugt neue | ✔ |
-| Klick öffnet WhatsApp in neuem Fenster, Website bleibt offen, keine automatische Übermittlung, keine Erfolgsbehauptung | ✔ |
-| Testmodus: Testnummer, Kennzeichnung „TEST“ | ✔ |
-| 100.000 Referenzen: Format korrekt, alle 32 Zeichen genutzt, χ²-Test unauffällig, ohne `crypto` keine Ersatznummer | ✔ |
-| Fallback „Bestelltext kopieren“ + Telefon vorhanden; Warnhinweis bei sehr langen Nachrichten | ✔ (Funktion vorhanden, Kopieren nicht automatisiert getestet) |
+- ✅ Getränke mit offenem Pfand-Prüfpunkt: nur telefonisch
+- ✅ Burger: nicht freigegebene Extras ausgeblendet, Burger bestellbar
+- ✅ Party-Pizza mit offener Belagliste: nur telefonisch
+- ✅ ohne Impressum/Zahlungsarten/Steuerstatus keine Online-Bestellung
 
-## Umsatzsteuer und Pfand
+### F. Umsatzsteuer
 
-| Prüfung | Ergebnis |
-|---|---|
-| reine Speisen (Salami 9,40 € → 7 %: 0,61 €) | ✔ |
-| reine Getränke (2 × Cola 0,33 l → 19 %: 0,80 €) | ✔ |
-| Mischbestellung mit Extras, Pfand und Lieferkosten: 7 % 1,72 €, 19 % 0,90 €; Summe der Brutto-Anteile = Gesamtsumme (keine Doppelaufschläge) | ✔ |
-| Kombiangebot ohne festgelegte Aufteilung → kein Steuerausweis; mit Aufteilung korrekt getrennt | ✔ |
-| Kleinunternehmer: kein Steuerausweis, Hinweis § 19 UStG | ✔ |
-| unbestätigter Steuerstatus: kein Ausweis | ✔ |
-| Pfand je Getränk, nicht bei Speisen; unklares Pfand (Ayran) sperrt die Bestellung des Artikels im Live-Betrieb | ✔ |
+- ✅ Abholung: enthaltene USt. 7 % 4,11 €, 19 % 0,68 €
+- ✅ Lieferung: Liefergebühr anteilig, USt. 7 % 4,23 €, 19 % 0,70 €
+- ✅ keine Umsatzsteuer aufgeschlagen (Gesamt unverändert brutto)
 
-## Technik, Darstellung, Barrierefreiheit
+### G. Lange Nachrichten, Bestellreferenz
 
-| Prüfung | Ergebnis |
-|---|---|
-| 26 Seiten bei 320, 390, 768 und 1440 px: keine JavaScript-Fehler, kein seitliches Scrollen | ✔ (zwei Fehler gefunden und behoben: Liefertabelle und eine lange Überschrift bei 320 px) |
-| keine einzige Anfrage an fremde Server beim Laden aller Seiten | ✔ |
-| alle internen Links, Skripte, Stylesheets, Bilder, Sprite-Referenzen erreichbar; 404-Seite mit Status 404 | ✔ |
-| je Seite genau eine h1, `lang="de"`, alle Formularfelder beschriftet, keine Buttons ohne Namen | ✔ |
-| „Bewegung reduzieren“: Titel-Animation läuft nicht | ✔ |
-| Build reproduzierbar (GitHub-Prüfung vergleicht erzeugte Seiten) | ✔ lokal; Workflow selbst noch nicht auf GitHub gelaufen |
+- ✅ lange Nachricht: Warnung und Kopier-Ausweg
+- ✅ 20.000 Referenzen: Format korrekt, keine Doppelung
+- ✅ … nur gültige Position, Menge begrenzt auf 50, Optionen bereinigt
 
-## Nicht getestet / offen
+### H. Mobile Darstellung
 
-- **Echte Geräte:** iPhone (Safari), Android (Chrome), WhatsApp-App und WhatsApp Web mit realer Übergabe – vor dem Livegang mit dem Testmodus an eine interne Nummer durchführen.
-- **Screenreader** (VoiceOver, TalkBack, NVDA) und vollständige WCAG-Prüfung (z. B. mit axe) – nur Basisprüfungen automatisiert.
-- **Live-Adresse auf GitHub Pages** und der GitHub-Workflow (kein Zugriff aus der Testumgebung; Pages muss im Repository eingeschaltet werden).
-- **Domain** – bewusst nicht verknüpft.
-- Firefox und Safari-Engine nicht automatisiert (nur Chromium).
-- Rechtliche Prüfung der Texte und der Bestellstrecke (siehe Freigabeliste).
-- Inhaltliche Richtigkeit aller Preise gegen den Originalflyer durch den Betreiber (Stichprobe automatisiert, Gesamtabgleich manuell empfohlen anhand der Allergenübersicht, die alle Gerichte tabellarisch listet).
+- ✅ 390 px: kein seitliches Scrollen auf 27 Seiten
+- ✅ 390 px: Menü öffnet
+- ✅ 390 px: Warenkorb-Drawer über Schaltfläche
+- ✅ 390 px: keine Fehler
+- ✅ 768 px: kein seitliches Scrollen auf 27 Seiten
+- ✅ 768 px: Menü öffnet
+- ✅ 768 px: Warenkorb-Drawer über Schaltfläche
+- ✅ 768 px: keine Fehler
+
+### I. Logo-Intro
+
+- ✅ „Bewegung reduzieren“: statisches Logo ohne Intro
+- ✅ Intro läuft
+- ✅ Intro endet nach ca. 3,4 s in der statischen Endpose
+- ✅ keine Fehler
+
+## Visuelle Abnahme MINAR ↔ SHAHI
+
+`python3 tests/vergleich.py /pfad/zu/minar/public` erzeugt Gegenüberstellungen bei identischen Viewports (390, 768, 1440 px) in [`abnahme/`](abnahme/): Startseite (oben und ganze Seite), Kategorieseite Pizza, Warenkorb, Bestellübersicht (Bon), Warenkorb-Drawer, mobile Navigation. Beide Seiten zeigen dieselbe simulierte Zeit (Montag 18:00) und einen vergleichbaren Warenkorb.
+
+| # | Prüfpunkt | Ergebnis |
+|---|---|---|
+| 1 | Header-Höhe | identisch (Topbar + Kopfzeile, `--header-h` unverändert) |
+| 2 | Logo-Platzierung | identisch; SHAHI-Logo ist kompakter (Seitenverhältnis 2,6 : 1 statt 4,2 : 1), gleiche Höhe 52/44/38 px |
+| 3 | Navigationsabstände | identisch, gleitender Indikator wie MINAR |
+| 4 | Hero-Proportionen | identisch; Logo-Breite so gewählt, dass die Höhe der des MINAR-Logos entspricht |
+| 5 | Hintergrundfarben und Verläufe | identisch (Aurora, Raster, Halo, rotierender Ring, Laufbänder); Hintergrund-Schriftzug „SHAHI“ |
+| 6 | Typografie und Schriftgrößen | identisch (Systemschriften, keine neue Schrift; Fraunces nur als Pfade im Logo) |
+| 7 | Button-Styling | identisch (Blattform, Licht-Spot, Lichtstreif, Roll-Label, Magnet) |
+| 8 | Karten-Design | identisch (Gerichte, Service-Liste, Kontakt- und Zonenkarten) |
+| 9 | Hover-Zustände | identisch (`fx.js` unverändert) |
+| 10 | Animationen | identisch; Logo-Intro ohne Tierfigur, 3,4 s statt 5,5 s |
+| 11 | Abschnittsabstände | identisch |
+| 12 | Warenkorb | identisch (dunkle Karte, Referenz, Mengensteuerung, Ändern/Entfernen, Summen) |
+| 13 | Bestellübersicht | identisch (Bon-Gestaltung); zusätzlicher Textlink „Bestelltext kopieren“ |
+| 14 | Footer | identisch; helles Logo für den dunklen Grund, ohne E-Mail-Zeile (keine Adresse vorhanden), zusätzliche Links „Bestellinfos · Allergene“ |
+| 15 | Mobile Navigation | identisch |
+
+Begründete Abweichungen: siehe [`ABSCHLUSSBERICHT.md`](ABSCHLUSSBERICHT.md), Abschnitt C.
+
+## Nicht getestet
+
+Echtes Absenden in WhatsApp (keine echten Bestellungen; der Test fängt `wa.me` ab), echte Mobilgeräte (iOS Safari, Android Chrome), Druckdialog, Veröffentlichung auf GitHub Pages, Domain, Google-Links im Internet (Testumgebung ohne Internetzugriff).

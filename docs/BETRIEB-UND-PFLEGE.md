@@ -1,119 +1,83 @@
 # Betrieb und Pflege
 
-Alle Inhalte, die sich ändern, liegen in zwei Dateien: `data/menu.json` (Speisekarte) und `data/config.json` (Betrieb). Layout und Programmcode müssen dafür nicht angefasst werden.
+Alle Inhalte stehen in **einer** Datei: `public/assets/js/menu-data.js`. Nach jeder Änderung:
 
-**Ablauf bei jeder Änderung**
-
-1. Datei bearbeiten (auf GitHub direkt im Browser über den Stift oder lokal im Editor).
-2. `node tools/build.mjs` – prüft die Daten (bei Fehlern bricht der Build mit einer verständlichen Meldung ab) und erzeugt alle Seiten neu.
-3. `node --test tests/unit.test.mjs` – Rechenregeln und Daten prüfen.
-4. Committen und pushen. GitHub Pages veröffentlicht innerhalb weniger Minuten.
-
-Die Seiten laden `menu.json` und `config.json` im Browser frisch nach. Eine direkt auf GitHub gespeicherte Preisänderung wirkt deshalb auch ohne Build sofort in Speisekarte, Warenkorb und Bestellung. Der Build sollte trotzdem folgen, damit die vorab erzeugten Seiten (für Suchmaschinen und Besucher ohne JavaScript) übereinstimmen – die GitHub-Prüfung (`.github/workflows/pruefung.yml`) meldet, wenn er fehlt.
-
-JSON ist streng: Anführungszeichen `"…"`, Komma zwischen Einträgen, kein Komma nach dem letzten Eintrag. Beträge stehen immer in **Cent** (`1090` = 10,90 €).
-
-## Speisekarte (`data/menu.json`)
-
-### Preis ändern
-
-```json
-{ "id": "pizza-salami", "nr": "106", "kategorie": "pizza", "name": "Salami", "preisCent": 940, ... }
+```bash
+node tools/build.mjs        # prüft die Daten (bricht bei Fehlern ab) und erzeugt die Seiten neu
+python3 tests/e2e.py        # optional: Browser-Tests
 ```
 
-`preisCent` anpassen. Bei Größen den Preis in `varianten` ändern:
+Dann committen und – nach Freigabe – den Workflow „Veröffentlichen“ starten.
 
-```json
-"varianten": [ { "id": "klein", "name": "klein", "preisCent": 490 }, { "id": "gross", "name": "groß", "preisCent": 690 } ]
+## Eröffnung schalten
+
+```js
+operation: { mode: "vor-eroeffnung", openingDate: null, … }
 ```
 
-### Gericht hinzufügen
+1. `openingDate: "2026-12-01"` setzen, sobald der Termin feststeht (Anzeige „Eröffnung am 01.12.2026“).
+2. Zur Eröffnung `mode: "geoeffnet"`. **Die Online-Bestellung bleibt trotzdem gesperrt**, bis eingetragen sind: `restaurant.owner`, `restaurant.legalForm`, `restaurant.email`, `payment.methods` und `tax.status: "bestaetigt"` mit `tax.smallBusiness: true/false`. Die fehlenden Punkte stehen in der Browser-Konsole.
+3. Gerichte/Optionen mit sperrenden Prüfpunkten (`checks` mit `blocks: true`) bleiben im Normalbetrieb „nur telefonisch“, bis der Punkt bestätigt und der Eintrag gelöscht ist. Liste: `docs/PRUEFPUNKTE-SPEISEKARTE.md`.
 
-```json
-{ "id": "pizza-tonno-spezial", "nr": "127", "kategorie": "pizza", "name": "Tonno Spezial",
-  "beschreibung": "mit Thunfisch, Zwiebeln und Peperoni", "preisCent": 1090,
-  "allergene": ["A", "D", "G"], "zusatzstoffe": [], "merkmale": [] }
+## Testbestellung vor dem Livegang
+
+```js
+restaurant: { testMode: true, testWhatsappNumber: "4917612345678", … }
 ```
 
-| Feld | Bedeutung |
+Im Testmodus gehen Bestellungen an die Testnummer, sind unabhängig von Öffnungszeiten und Eröffnungsmodus möglich und als „TESTBESTELLUNG“ markiert; ein Hinweis steht im Warenkorb. Danach unbedingt `testMode: false`.
+
+## Öffnungszeiten
+
+```js
+hours: {
+  week: { "1": [["16:30", "22:30"]], "2": [], … },      // 0 = Sonntag … 6 = Samstag, [] = Ruhetag, mehrere Fenster möglich
+  orderUntil: { pickup: "22:15", delivery: "22:15" },  // Bestellannahmeschluss
+  lead: { pickup: 20, delivery: 30 },                   // Mindestvorbereitungszeit (Minuten)
+  latestWish: { pickup: "22:30", delivery: "22:30" },   // späteste Wunschzeit
+  slot: 15,                                             // Raster der Wunschzeit
+  exceptions: [], holidays: [], closures: [],
+  pause: { active: false, note: "" }
+}
+```
+
+| Fall | Eintrag |
 |---|---|
-| `id` | technische, eindeutige Kennung (Kleinbuchstaben, Ziffern, Bindestriche). **Nie ändern**, solange Kunden das Gericht im Warenkorb haben könnten. Ist nicht die Artikelnummer. |
-| `nr` | Artikelnummer laut Karte, Text (z. B. `"96a"`). Muss eindeutig sein. Getränke ohne Nummer: Feld weglassen. |
-| `kategorie` | `id` einer Kategorie |
-| `preisCent` oder `varianten` | ein Preis oder Größen (`volumenMl` bei Getränken für den Grundpreis je Liter) |
-| `optionen` | Optionsgruppen (sonst gelten die der Kategorie, z. B. Dressing bei Salaten) |
-| `allergene`, `zusatzstoffe` | Kennzeichnung exakt wie auf der Karte (Buchstaben bzw. Ziffern aus der Legende) |
-| `merkmale` | `"vegetarisch"`, `"scharf"` – nur, wenn die Karte es so sagt |
-| `steuer` | Standard aus der Kategorie (`speisen` 7 % / `getraenke` 19 %). Kombiangebote: `{ "typ": "aufteilung", "getraenkeAnteilCent": 250 }` |
-| `pfandCent` | Getränkepfand je Stück (`25`, `0` = ohne Pfand, `null` = noch unklar → nicht bestellbar) |
-| `verfuegbar` | `false` blendet „Hinzufügen“ aus (z. B. vorübergehend ausverkauft) |
-| `bild` | für spätere eigene Fotos vorgesehen |
-| `pruefen` | offene Punkte: `{ "feld": "preis", "hinweis": "…", "sperrt": true }`. Sperrende Punkte machen das Gericht im Live-Betrieb nicht bestellbar. Nach Klärung den Eintrag löschen. |
-| `nameLautFlyer` | Originalschreibweise, falls korrigiert (nur Dokumentation) |
+| Feiertag geschlossen | `exceptions: [{ date: "2026-12-25", closed: true, note: "1. Weihnachtsfeiertag" }]` |
+| Sonderöffnungszeit | `{ date: "2026-12-31", times: [["11:00", "18:00"]], orderUntil: "17:30", note: "Silvester" }` |
+| Betriebsferien | `holidays: [{ from: "2027-01-07", to: "2027-01-20", note: "Betriebsferien" }]` |
+| kurzfristig zu | `closures: [{ from: "2026-12-01T18:00", to: "2026-12-01T20:00", note: "Technische Störung" }]` |
+| zu viel los | `pause: { active: true, note: "Gerade sehr viel los – bitte telefonisch bestellen." }` |
 
-### Optionsgruppen (Größen, Beilagen, Extras)
+Alle Zeiten gelten in `Europe/Berlin` (Sommer-/Winterzeit automatisch). Abweichende Tage der nächsten drei Wochen erscheinen unter der Öffnungszeiten-Tabelle. Nach dem Bestätigen der Zeiten `confirmed.times` usw. auf `true` setzen.
 
-```json
-"nudel-ueberbacken": { "label": "Überbacken", "typ": "mehrere", "optionen": [
-  { "id": "ueberbacken", "name": "überbacken", "preisCent": 250, "allergene": ["G"] } ] }
+## Liefergebiete
+
+```js
+zones: [{ id: "biberach", name: "Biberach", minOrder: 15, fee: 1, places: [{ name: "Biberach-Rißegg", zip: "88400", confirmed: false }, …] }, …]
 ```
 
-`typ: "eine"` = genau eine Auswahl (erste ist vorausgewählt), `typ: "mehrere"` = beliebig viele, `min`/`max` begrenzen. `optional: true` bei `eine` bedeutet: Gruppe darf ausgeblendet werden (z. B. „ohne Beilage“). `neutral: true` bei einer Option (z. B. „ohne Beilage“) – erscheint nicht im Warenkorb. Allergene/Zusatzstoffe einer Option werden bei Auswahl zur Kennzeichnung des Gerichts hinzugefügt.
+Mindestbestellwert und Lieferkosten laut Flyer (Biberach 15 €/1 €, bis 7 km 25 €/2 €, 7–12 km 45 €/3 €). **Online wählbar sind nur Orte mit `confirmed: true`.** Die vorgeschlagene Ortsliste (15 Orte) ist vom Betreiber zu prüfen; eine automatische Entfernungsberechnung gibt es bewusst nicht. Ist kein Ort bestätigt, ist online nur Abholung möglich (Hinweis im Warenkorb).
 
-## Betrieb (`data/config.json`)
+## Preise und Gerichte
 
-### Eröffnung schalten
+Siehe Aufbau im Kopf von `menu-data.js`. Preise in Euro (`9.4`), gerechnet wird intern in Cent. `id` nie ändern (Warenkorb-Bezug). Neue Kategorie → `categories` ergänzen, `node tools/build.mjs`.
 
-```json
-"betrieb": { "modus": "geoeffnet", ... }
+## Zahlung und Steuer
+
+```js
+payment: { methods: ["bar"], note: null }                  // z. B. ["bar", "Karte bei Lieferung"], note = eigener Satz
+tax: { status: "bestaetigt", smallBusiness: false, show: false, … }
 ```
 
-`"vor-eroeffnung"`: Karte sichtbar, keine Bestellung, Eröffnungshinweis. `"geoeffnet"`: Warenkorb und Bestellung aktiv – **aber nur, wenn** Betreibername, Rechtsform, E-Mail, Zahlungsarten und der Steuerstatus eingetragen sind. Sonst erscheint „Online-Bestellung ist gerade nicht verfügbar“ und in der Browser-Konsole steht, was fehlt.
+- `methods: ["bar"]` → Texte wie bei MINAR („Zahlung ausschließlich bar …“, „Insgesamt bar zu zahlen“).
+- Regelbesteuerung → „inkl. gesetzlicher Umsatzsteuer“; Kleinunternehmer → Hinweis nach § 19 UStG.
+- `show: true` → enthaltene USt. (7 %/19 %, Pfand wie Getränk, Lieferkosten anteilig) in Bon und Nachricht. Das Menü Nr. 73 braucht dafür `tax: { split: true, drinkShare: <Getränkeanteil in €> }`.
 
-### Öffnungszeiten, Sonderzeiten, Pausen
+## Google-Bewertung
 
-```json
-"woche": { "1": [["16:30", "22:30"]], "2": [], ... }     // 0 = Sonntag … 6 = Samstag; [] = Ruhetag; mehrere Zeitfenster möglich
-"bestellschluss": "22:15",
-"ausnahmen": [
-  { "datum": "2026-12-24", "geschlossen": true, "hinweis": "Heiligabend geschlossen" },
-  { "datum": "2026-12-31", "zeiten": [["11:00", "18:00"]], "bestellschluss": "17:30", "hinweis": "Silvester verkürzt" }
-],
-"betriebsferien": [ { "von": "2027-01-04", "bis": "2027-01-10", "hinweis": "Betriebsferien" } ],
-"schliessungen": [ { "von": "2026-11-20T18:00", "bis": "2026-11-20T19:30", "hinweis": "Vorübergehend geschlossen" } ],
-"bestellpause": { "aktiv": true, "hinweis": "Gerade sehr viel los – bitte rufen Sie uns an." },
-"vorlaufMinuten": { "abholung": 20, "lieferung": 30 },
-"spaetesteWunschzeit": { "abholung": "22:30", "lieferung": "22:30" },
-"vorbestellungen": false
-```
+`restaurant.googleReviewUrl` mit dem Link aus dem Google-Unternehmensprofil („Um Rezensionen bitten“) füllen, `node tools/build.mjs`. Leer = Bewertungsbereich ausgeblendet.
 
-Alle Zeiten gelten in Europe/Berlin, Sommer- und Winterzeit werden automatisch berücksichtigt. **Hinweis:** Eine Änderung an `config.json` ist nach dem Push erst nach dem Veröffentlichen durch GitHub (meist 1–2 Minuten) wirksam. Für eine sofortige Pause bleibt das Telefon/WhatsApp der schnellste Weg.
+## Logo
 
-### Liefergebiet
-
-```json
-"zonen": [ { "id": "biberach", "name": "Biberach", "mindestbestellwertCent": 1500, "lieferkostenCent": 100 }, ... ],
-"orte":  [ { "name": "Warthausen", "plz": "88447", "zone": "bis7", "bestaetigt": true }, ... ]
-```
-
-Kunden wählen ihren Ort aus der Liste; die PLZ wird geprüft. Nur Orte mit `"bestaetigt": true` erscheinen im Checkout und auf der Seite „Lieferung & Abholung“. Ist kein Ort bestätigt, ist nur Abholung möglich. `"aktiv": false` schaltet die Lieferung ganz ab.
-
-### Telefonnummern
-
-`restaurant.telefon[]`: `anzeige`, `nummer` (international), `zweck` (z. B. „Bestellungen“), `sichtbar`. Die erste sichtbare Nummer ist die Hauptnummer (Anrufen-Button, Hinweise).
-
-### Steuer, Zahlung, Rechtsmodell
-
-```json
-"steuer": { "status": "bestaetigt", "kleinunternehmer": false, "saetze": { "speisen": 7, "getraenke": 19 }, "ausweisen": true },
-"zahlung": { "arten": ["Barzahlung"], "hinweis": "bar bei Abholung bzw. Lieferung" },
-"bestellung": { "rechtsmodell": "verbindlich" }
-```
-
-### Testmodus (vor dem Livegang oder nach Änderungen)
-
-```json
-"testmodus": { "aktiv": true, "whatsappNummer": "49151XXXXXXXX" }
-```
-
-Bestellungen gehen dann an die Testnummer, sind als TEST markiert und unabhängig von Öffnungszeiten und Betreiberangaben möglich (Prüfpunkte gelten weiter). Banner auf der Bestellseite. **Danach unbedingt wieder `"aktiv": false`** – am besten nur lokal oder auf einem eigenen Branch testen.
+Quelle ist das SHAHI-Logo; Varianten erzeugt `python3 tools/logo/logo.py` (danach `node tools/build.mjs`). Das Logo nicht von Hand in den SVG-Dateien ändern.

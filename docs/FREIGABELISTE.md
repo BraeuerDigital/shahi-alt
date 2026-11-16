@@ -1,46 +1,46 @@
 # Freigabeliste vor dem Livegang
 
-Stand: 15.11.2026. Legende: **B** = vom Betreiber zu bestätigen/liefern · **R** = rechtlich zu prüfen · **T** = technischer Schritt der Agentur.
-Einzelpunkte je Gericht (Preise, Pfand, Allergene, Schreibweisen) stehen automatisch aktuell in [`PRUEFPUNKTE-SPEISEKARTE.md`](PRUEFPUNKTE-SPEISEKARTE.md).
+Stand 16.11.2026. **B** = vom Betreiber zu bestätigen/liefern · **R** = rechtlich zu prüfen (keine Rechtsberatung durch die Agentur) · **S** = mit Steuerberatung · **T** = technischer Schritt der Agentur.
+Einzelpunkte je Gericht stehen automatisch aktuell in [`PRUEFPUNKTE-SPEISEKARTE.md`](PRUEFPUNKTE-SPEISEKARTE.md) (58 Punkte, davon 18 sperrend).
 
-Die Website erzwingt Teile dieser Liste selbst: Im Modus `geoeffnet` bleibt die Online-Bestellung gesperrt, solange Betreibername, Rechtsform, E-Mail, Zahlungsarten oder der Umsatzsteuer-Status fehlen. Produkte mit sperrenden Prüfpunkten sind nicht bestellbar, unbestätigte Lieferorte nicht wählbar.
+Die Website erzwingt Teile dieser Liste selbst: Im Modus `geoeffnet` bleibt die Online-Bestellung gesperrt, solange Betreibername, Rechtsform, E-Mail, Zahlungsarten oder der Umsatzsteuer-Status fehlen. Gerichte und Optionen mit sperrenden Prüfpunkten sind nur telefonisch bestellbar, unbestätigte Lieferorte nicht wählbar.
+Alle Felder stehen in `public/assets/js/menu-data.js`.
 
 ## 1. Betreiber und Impressum (B, R)
 
-| # | Punkt | Feld in `data/config.json` |
+| # | Punkt | Feld |
 |---|---|---|
-| 1.1 | Vollständiger Name des Inhabers bzw. Firma laut Gewerbeanmeldung/Register | `betreiber.name` |
-| 1.2 | Rechtsform (Einzelunternehmen, GbR, GmbH …), bei Gesellschaften Vertretungsberechtigte | `betreiber.rechtsform`, `betreiber.vertretung` |
-| 1.3 | E-Mail-Adresse (Pflicht im Impressum) | `betreiber.email` |
-| 1.4 | Handelsregister (falls eingetragen), USt-IdNr. (falls vorhanden), Wirtschafts-IdNr. (falls zugeteilt) | `betreiber.handelsregister`, `.ustId`, `.wirtschaftsId` |
-| 1.5 | Aufsichtsbehörde – nur falls für die Tätigkeit eine Zulassung nötig ist (R) | `betreiber.aufsichtsbehoerde` |
-| 1.6 | Angabe zur Verbraucherstreitbeilegung nach § 36 VSBG, soweit erforderlich (R). Kein Link zur abgeschalteten EU-OS-Plattform. | `betreiber.verbraucherstreitbeilegung` |
-| 1.7 | Inhaltlich Verantwortlicher (§ 18 Abs. 2 MStV) – nur bei redaktionellen Inhalten (R) | `betreiber.inhaltlichVerantwortlich` |
+| 1.1 | Vollständiger Name des Inhabers bzw. der Firma | `restaurant.owner` |
+| 1.2 | Rechtsform, bei Gesellschaften Vertretungsberechtigte | `restaurant.legalForm`, `.representative` |
+| 1.3 | E-Mail-Adresse (Pflicht im Impressum) und E-Mail-Anbieter (Datenschutz) | `restaurant.email` |
+| 1.4 | Handelsregister, USt-IdNr., Wirtschafts-IdNr. – nur soweit vorhanden | `.register`, `.vatId`, `.economicId` |
+| 1.5 | Aufsichtsbehörde – nur falls Zulassung nötig (R) | `.supervisoryAuthority` |
+| 1.6 | Verbraucherstreitbeilegung nach § 36 VSBG, soweit erforderlich (R) | `.disputeResolution` |
 
-**Ohne vollständiges Impressum die Seite nicht öffentlich bewerben.** Die GitHub-Pages-Adresse ist bis dahin nur zur internen Abstimmung gedacht (alle Seiten `noindex`).
-
-## 2. Kontakt und Öffnungszeiten (B)
+## 2. Öffnungszeiten, Kontakt (B)
 
 | # | Punkt |
 |---|---|
-| 2.1 | Öffnungszeiten laut Flyer bestätigen (Mo, Mi, Do 16:30–22:30; Di Ruhetag; Fr–So 11:00–22:30), dann `oeffnungszeiten._bestaetigt.zeiten = true` (erst dann erscheinen sie in den strukturierten Daten für Google) |
-| 2.2 | Bestellannahmeschluss 22:15 Uhr bestätigen |
-| 2.3 | Vorlaufzeiten (vorgeschlagen: Abholung 20 Min., Lieferung 30 Min.) und späteste Wunschzeit (22:30) bestätigen |
-| 2.4 | Feiertage, Heiligabend/Silvester, Betriebsferien – sobald bekannt in `ausnahmen`/`betriebsferien` eintragen |
-| 2.5 | Welche der drei Festnetznummern wofür? (`restaurant.telefon[].zweck`, `sichtbar`); WhatsApp 0179 69 500 47 als Bestellnummer bestätigen |
-| 2.6 | Eröffnungsdatum, sobald fest (`betrieb.eroeffnungsdatum`) – es wurde keines erfunden |
-| 2.7 | Google-Maps-Link prüfen (führt derzeit zur Adresssuche, da noch kein Unternehmensprofil existiert) |
+| 2.1 | Zeiten laut Flyer bestätigen: Mo, Mi, Do 16:30–22:30 · Fr–So 11:00–22:30 · Di Ruhetag → `hours.confirmed.times = true` |
+| 2.2 | Bestellannahmeschluss 22:15 Uhr (beide Bestellarten gleich? MINAR trennt Lieferung/Abholung) |
+| 2.3 | Vorbereitungszeiten 20 Min. Abholung / 30 Min. Lieferung und späteste Wunschzeit 22:30 |
+| 2.4 | Feiertage, Heiligabend/Silvester, Betriebsferien eintragen, sobald bekannt |
+| 2.5 | Welche der drei Festnetznummern wofür (07351 347 04 00 / 03 / 04)? WhatsApp 0179 69 500 47 als Bestellnummer bestätigen |
+| 2.6 | Eröffnungsdatum (`operation.openingDate`) – keines erfunden |
+| 2.7 | Dine-in? Die Website nennt nur Abholung und Lieferservice (Flyer/Konfiguration). Falls es Sitzplätze gibt: Texte ergänzen |
+| 2.8 | Google-Maps-Link prüfen; Google-Unternehmensprofil anlegen, Bewertungslink eintragen |
 
-## 3. Liefergebiet und Bestellung (B)
+## 3. Liefergebiet und Bestellannahme (B)
 
 | # | Punkt |
 |---|---|
-| 3.1 | Was zählt als Zone „Biberach“ – nur Kernstadt oder alle Stadtteile (Rißegg, Mettenberg, Ringschnait, Stafflangen)? |
-| 3.2 | „bis 7 km“ / „7–12 km“: Luftlinie oder Fahrstrecke? Gemessen ab Bachgasse 17? |
-| 3.3 | Vorgeschlagene Ortsliste (15 Orte, siehe Prüfpunkte) bestätigen, ergänzen, korrigieren → je Ort `"bestaetigt": true`. Eine automatische Entfernungsberechnung wurde bewusst nicht eingebaut. |
-| 3.4 | Zahlungsarten (bar? Karte bei Lieferung?) → `zahlung.arten`, `zahlung.hinweis` |
-| 3.5 | Wer nimmt WhatsApp-Bestellungen an (WhatsApp oder WhatsApp Business, welches Gerät), wie schnell wird bestätigt, wie wird mit Doppelanfragen umgegangen (gleiche Referenz = gleiche Bestellung)? |
-| 3.6 | Löschfristen für WhatsApp-Chats und Bestelldaten; wer hat Zugriff? (für die Datenschutzerklärung) |
+| 3.1 | Zone „Biberach“: nur Kernstadt oder alle Stadtteile (Rißegg, Mettenberg, Ringschnait, Stafflangen)? |
+| 3.2 | „bis 7 km“ / „7 bis 12 km“: Luftlinie oder Fahrstrecke, ab Bachgasse 17? |
+| 3.3 | Vorgeschlagene 15 Orte bestätigen/ergänzen → `confirmed: true`. Ohne Bestätigung ist online nur Abholung möglich. |
+| 3.4 | Zahlungsarten (bar? Karte bei Lieferung?) → `payment.methods` |
+| 3.5 | WhatsApp-Annahme: Gerät/Business-Konto, Reaktionszeit, Schnellantworten einrichten (`WHATSAPP-SCHNELLANTWORTEN.md`), Umgang mit Doppelanfragen (gleiche Referenz) und Änderungen (§ 150 Abs. 2 BGB) |
+| 3.6 | Löschfristen für WhatsApp-Chats und Bestelldaten, Zugriffe (Datenschutz) |
+| 3.7 | Bezugspunkt der Lieferzeit „20–90 Minuten ab Annahme der Bestellung“ (Text wie MINAR) bestätigen |
 
 ## 4. Speisekarte (B)
 
@@ -49,55 +49,42 @@ Details: [`PRUEFPUNKTE-SPEISEKARTE.md`](PRUEFPUNKTE-SPEISEKARTE.md). Schwerpunkt
 | # | Punkt |
 |---|---|
 | 4.1 | Preis Nr. 23 Chickenburgerle (im Foto verdeckt, 6,00 € angenommen) |
-| 4.2 | Pfand je Getränk und Verpackung (Flyer nennt kein Pfand; Ayran Becher oder Flasche?) |
-| 4.3 | „Extra Zusatz“ (Pommes/Wedges +3,50 €, Jalapeños/Röstzwiebeln +0,50 €, Spiegelei/Käse +1,00 €, Fleisch-Patty +5,00 €, Käsespätzle +7,00 €): gilt für alle Burger 20–39? Allergene der Extras? |
-| 4.4 | Party-Pizza Nr. 136 „vier Beläge nach Wahl“: welche Beläge? (Vorschlag aus der Pizzakarte hinterlegt) |
-| 4.5 | Menü Nr. 73: welches Getränk ist enthalten, Pfand, Steueraufteilung |
-| 4.6 | Allergenkennzeichnung: 15 Gerichte ohne Kennzeichnung, mehrere Widersprüche (z. B. Garnelen/Krabben ohne B, Calamari mit D statt N, Käse/Ei/Sahne ohne G/C). Legende enthält kein I (Sellerie) und kein M (Lupinen) – bestätigen, dass keines der Gerichte sie enthält. |
-| 4.7 | Red Bull: Füllmenge, Koffein-Kennzeichnung und Pflichthinweis „Erhöhter Koffeingehalt …“ |
-| 4.8 | Sternchen bei Nr. 24/25 ohne Erklärung |
-| 4.9 | „Minar“ im SHAHI-Flyer: Nr. 98 „Dönerteller Minar überbacken“, Nr. 158 „Minar Gewürzmischung“ – so lassen? |
-| 4.10 | „Alle Gerichte mit Reis“ – gilt das auch für Naan (155/156) und für die vegetarischen Gerichte 170–173? |
-| 4.11 | Döner-Soßen: Soll eine Soßenauswahl angeboten werden? (derzeit freies Hinweisfeld, keine erfundenen Optionen) |
+| 4.2 | Pfand je Getränk (Flyer nennt keins; 0,25 € angenommen, Ayran unbekannt) – **sperrt alle Getränke** im Normalbetrieb |
+| 4.3 | „Extra Zusatz“ und „Beilage dazu“ für alle Burger 20–39? Allergene der Extras |
+| 4.4 | Party-Pizza Nr. 136: Belagliste (Vorschlag hinterlegt) – sperrt |
+| 4.5 | Menü Nr. 73: enthaltenes Getränk, Pfand, Steueraufteilung – sperrt |
+| 4.6 | Allergenkennzeichnung: Lücken und Widersprüche (z. B. Garnelen ohne B, Calamari mit D statt N); Legende ohne I (Sellerie) und M (Lupinen) |
+| 4.7 | Red Bull: Füllmenge, Koffeinhinweis nach LMIV |
+| 4.8 | „Minar“ im SHAHI-Flyer: Nr. 98 „Dönerteller Minar überbacken“, Nr. 158 „Minar Gewürzmischung“ – Namen so lassen? (Website übernimmt den Flyer wörtlich) |
+| 4.9 | Döner-Soßen: MINAR bietet eine Soßenauswahl an; der SHAHI-Flyer nennt keine – derzeit nur Hinweisfeld. Gewünscht? |
+| 4.10 | Eigene Fotos der Gerichte und des Ladens (Bildrechte) – bis dahin Illustrationen |
 
-## 5. Steuer (B mit Steuerberatung)
+## 5. Steuer (S)
 
 | # | Punkt |
 |---|---|
-| 5.1 | Regelbesteuerung oder Kleinunternehmer (§ 19 UStG)? → `steuer.kleinunternehmer`, `steuer.status = "bestaetigt"`. Davon hängt der Preishinweis („inkl. USt.“ bzw. „gemäß § 19 UStG keine USt.“) ab. |
-| 5.2 | Speisen 7 %, Getränke 19 % (Stand seit 01.01.2026). Ayran als Milcherzeugnis bei Abholung/Lieferung ggf. 7 %. |
-| 5.3 | Lieferkosten als Nebenleistung anteilig nach Warenwert je Steuersatz; Pfand wie das Getränk – bestätigen. |
-| 5.4 | Soll die enthaltene Steuer in Übersicht und Nachricht ausgewiesen werden? (`steuer.ausweisen`) Die Website ersetzt keinen Kassenbeleg. |
-| 5.5 | Notiz auf dem Foto neben dem Flyer („MwSt. au… → 7 %“) – vermutlich „außer Haus 7 %“; mit 5.2 abgleichen. |
+| 5.1 | Regelbesteuerung oder Kleinunternehmer (§ 19 UStG) → `tax.status = "bestaetigt"`, `tax.smallBusiness` |
+| 5.2 | Speisen 7 %, Getränke 19 % (seit 01.01.2026); Ayran ggf. 7 % (Milchanteil) → dann `tax: "speisen"` beim Ayran |
+| 5.3 | Lieferkosten anteilig nach Warenwert je Satz, Pfand wie Getränk – bestätigen |
+| 5.4 | Enthaltene USt. in Übersicht und Nachricht ausweisen? (`tax.show`) – die Website ersetzt keinen Kassenbeleg |
 
 ## 6. Rechtliche Freigabe (R)
 
-Begründung und Optionen: [`RECHTLICHES.md`](RECHTLICHES.md).
-
 | # | Punkt |
 |---|---|
-| 6.1 | **Bestellmodell und Schaltfläche (§ 312j Abs. 3 BGB):** Voreinstellung ist der vorsichtige Weg „Zahlungspflichtig bestellen“ mit Annahme durch Bestätigung des Restaurants. Alternative `rechtsmodell: "anfrage"` nur nach anwaltlicher Prüfung (bloße Umbenennung genügt nicht). |
-| 6.2 | Informationspflichten §§ 312i, 312j Abs. 1/2 BGB, Art. 246a/246c EGBGB – Platzierung und Vollständigkeit prüfen |
-| 6.3 | Widerrufsrecht: Ausnahmen nach § 312g Abs. 2 BGB (schnell verderbliche Speisen) und Getränke in Flaschen/Dosen; falls ein Widerrufsrecht besteht: Widerrufsbelehrung und Widerrufsfunktion nach § 356a BGB (seit 19.06.2026) |
-| 6.4 | Preisangaben (PAngV): Pfand separat, Grundpreis je Liter bei Getränken (umgesetzt), Lieferkosten |
-| 6.5 | Datenschutzerklärung: GitHub als Hoster (Drittlandübermittlung, Auftragsverarbeitung), WhatsApp/Meta, Speicherfristen |
-| 6.6 | LMIV/LMIDV: Allergeninformation im Fernabsatz vor Vertragsschluss (umgesetzt) und bei Lieferung (Betrieb) |
-| 6.7 | AGB: nicht zwingend, nicht erstellt. Falls gewünscht, passend zum WhatsApp-Ablauf anwaltlich erstellen lassen. |
-| 6.8 | Barrierefreiheitsstärkungsgesetz: Ausnahme für Kleinstunternehmen (< 10 Beschäftigte, ≤ 2 Mio. € Umsatz) prüfen; die Website ist unabhängig davon an WCAG 2.2 AA ausgerichtet |
-| 6.9 | Verpackungsrecht: Registrierung/Systembeteiligung für Serviceverpackungen, Mehrwegangebotspflicht bzw. Ausnahme für kleine Betriebe (VerpackG; seit 12.08.2026 teilweise VerpackDG – prüfen) |
+| 6.1 | **Absendehandlung wie MINAR („Weiter zu WhatsApp“ + Hinweis):** Die bisherige SHAHI-Website nutzte die Schaltfläche „Zahlungspflichtig bestellen“. Auftragsgemäß gilt jetzt der MINAR-Ablauf. MINAR selbst bewertet die Button-Lösung (§ 312j Abs. 3/4 BGB, BGH 09.10.2025 – I ZR 159/24) als **offen** – für SHAHI ebenso klären. |
+| 6.2 | §§ 312i, 312j BGB, Art. 246a/246c EGBGB: Informationspflichten, Zugangsbestätigung, Vertragstextspeicherung – Umsetzung auf `bestellinformationen.html` und im Warenkorb prüfen |
+| 6.3 | Widerrufsrecht/Ausnahmen (§ 312g Abs. 2 BGB), ggf. Widerrufsfunktion (§ 356a BGB) – Platzhalter |
+| 6.4 | PAngV: Endpreise, Pfand separat, Grundpreis je Liter (umgesetzt), Lieferkosten |
+| 6.5 | Datenschutzerklärung: GitHub als Hoster (Drittland, Auftragsverarbeitung), WhatsApp, Speicherfristen, E-Mail-Anbieter |
+| 6.6 | LMIV/LMIDV: Allergeninformation vor Vertragsschluss (Karte, Dialog, `allergene.html`) und bei Lieferung (Betrieb) |
+| 6.7 | Barrierefreiheitsstärkungsgesetz (Kleinstunternehmen-Ausnahme?), Verpackungsrecht (Mehrwegangebot, Registrierung) |
+| 6.8 | Cookie-Banner: nicht erforderlich (keine Cookies, kein Tracking, nur technisch notwendige Browser-Speicherung) – bestätigen |
 
-## 7. Medien und Marke (B)
+## 7. Livegang (T)
 
-| # | Punkt |
-|---|---|
-| 7.1 | Neues Logo/Markenzeichen freigeben (eigene Gestaltung; das Flyer-Logo mit der Ziege wurde bewusst nicht übernommen) |
-| 7.2 | Eigene Fotos der Gerichte und des Ladens liefern (Bildrechte bestätigen). Bis dahin: eigene Illustrationen, keine Stockfotos. Produkte haben ein Feld `bild` für spätere Fotos. |
-
-## 8. Technische Schritte zum Livegang (T)
-
-1. Alle B/R-Punkte erledigt, Werte in `data/config.json` und `data/menu.json` eingetragen, sperrende Prüfpunkte gelöscht.
-2. `betrieb.modus` auf `"geoeffnet"`, `website.indexierbar` auf `true`.
-3. `node tools/build.mjs`, `node --test tests/unit.test.mjs`, Browser-Tests.
-4. Testbestellung im Testmodus an eine interne Nummer (siehe `BETRIEB-UND-PFLEGE.md`), danach Testmodus aus.
-5. Domain verknüpfen ([`GITHUB-PAGES-UND-DOMAIN.md`](GITHUB-PAGES-UND-DOMAIN.md)), HTTPS erzwingen, Datenschutzerklärung um Registrar/DNS ergänzen.
-6. Google-Unternehmensprofil einrichten und verifizieren.
+1. Punkte 1–6 erledigt, Werte eingetragen, sperrende Prüfpunkte gelöscht.
+2. Testbestellung im Testmodus an eine interne Nummer, danach `testMode: false`.
+3. `operation.mode = "geoeffnet"`, nach Freigabe `operation.indexable = true`; `node tools/build.mjs`; `python3 tests/e2e.py`.
+4. Workflow „Veröffentlichen“, Domain verknüpfen ([`HOSTING-UND-DOMAIN.md`](HOSTING-UND-DOMAIN.md)), HTTPS erzwingen.
+5. Datenschutz um Domain/DNS ergänzen; Google-Profil verknüpfen.

@@ -1,0 +1,427 @@
+[
+ {
+  "pruefung": "27 Seiten ohne JavaScript-Fehler",
+  "ok": true,
+  "info": "[]"
+ },
+ {
+  "pruefung": "keine externen Anfragen beim Seitenaufruf",
+  "ok": true,
+  "info": "[]"
+ },
+ {
+  "pruefung": "alle 54 internen Links und Dateien erreichbar",
+  "ok": true,
+  "info": "[]"
+ },
+ {
+  "pruefung": "keine MINAR-Restaurantdaten in Seiten und app.js",
+  "ok": true,
+  "info": "[]"
+ },
+ {
+  "pruefung": "Status „Eröffnung in Vorbereitung“",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Speisekarte sichtbar, Gericht in den Warenkorb",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Warenkorb-Drawer öffnet",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Bestellarten gesperrt",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Hinweis: Bestellung ab Eröffnung",
+  "ok": true,
+  "info": "Wir bereiten gerade die Eröffnung vor. Die Speisekarte können Sie schon ansehen – bestellen können Sie, sobald wir geöffnet haben."
+ },
+ {
+  "pruefung": "keine Bestellübersicht / kein WhatsApp im Vor-Eröffnungsmodus",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "keine Fehler",
+  "ok": true,
+  "info": "[]"
+ },
+ {
+  "pruefung": "Status geöffnet, Bestellschluss 22:15",
+  "ok": true,
+  "info": "LIEFERSERVICE · ABHOLUNG · BIBERACH\nJetzt geöffnet · Bestellungen bis 22:15 Uhr\n07351 347 04 00"
+ },
+ {
+  "pruefung": "Dialogpreis Burger 10,00 €",
+  "ok": true,
+  "info": "Hinzufügen · 10,00 €"
+ },
+ {
+  "pruefung": "Party-Pizza: Pflichtauswahl 4 Beläge",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "ohne 4 Beläge nicht hinzufügbar",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "5. Belag gesperrt (max 4)",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Grundpreis je Liter bei Getränken",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "5 Positionen (Salami zusammengeführt)",
+  "ok": true,
+  "info": "5"
+ },
+ {
+  "pruefung": "Salami Menge 2",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Warenwert 66,80 €",
+  "ok": true,
+  "info": "Warenwert\n66,80 €\nGetränkepfand\n0,25 €\nInsgesamt bar\n67,05 €"
+ },
+ {
+  "pruefung": "Pfand 0,25 € separat",
+  "ok": true,
+  "info": "Warenwert\n66,80 €\nGetränkepfand\n0,25 €\nInsgesamt bar\n67,05 €"
+ },
+ {
+  "pruefung": "Gesamt Abholung 67,05 €",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Referenz SHA-A-YYYYMM-XXXXXXXX",
+  "ok": true,
+  "info": "SHA-A-202611-JWGD55AG"
+ },
+ {
+  "pruefung": "Menge + aktualisiert Summe",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Bearbeiten übernimmt Variante",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Pflichtfelder werden markiert",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Bestellübersicht (Bon) öffnet",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Bon: SHAHI, Adresse, Referenz",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Bon: Positionen mit Extras und Pfand",
+  "ok": true,
+  "info": "SHAHI KÜCHE\n\nBachgasse 17\n88400 Biberach an der Riß\n\nBESTELLREFERENZ\nSHA-A-202611-JWGD55AG\n\nIHRE BESTELLÜBERSICHT\nBestellart\nAbholung\nName\nErika Muster\nTelefon\n0170 1234567\nWunschzeit\nso schnell wie möglich (unverbindlich)\n2 ×\nNr. 106 Salami\n18,80 €\nje 9,40 €\n1 ×\nNr. 20 Hamburgerle\n10,00 €\nBeilage d"
+ },
+ {
+  "pruefung": "Bon: Gesamt bar 67,05 €",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "WhatsApp-Link an 0179 69 500 47",
+  "ok": true,
+  "info": "https://wa.me/491796950047?text=SHAHI%20K%C3%9CCHE%20%E2%80%"
+ },
+ {
+  "pruefung": "Nachricht vollständig",
+  "ok": true,
+  "info": "SHAHI KÜCHE – BESTELLUNG\n\nBestellreferenz: SHA-A-202611-JWGD55AG\nBestellart: Abholung\nName: Erika Muster\nTelefon: 0170 1234567\nWunschzeit: so schnell wie möglich\n\nBESTELLUNG\n\n2 × Nr. 106 Salami – 18,80 € (je 9,40 €)\n\n1 × Nr. 20 Hamburgerle – 10,00 €\n- Beilage dazu: mit Wedges (+3,50 €)\n- Extra Zusat"
+ },
+ {
+  "pruefung": "keine geschützten Leerzeichen in der Nachricht",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "„Weiter zu WhatsApp“ öffnet nur wa.me (kein Versand durch die Website)",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "neutraler Hinweis, keine Erfolgsmeldung",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "localStorage ohne Name/Telefon",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Formular nur im sessionStorage",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "keine MINAR-Schlüssel",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Referenz nach Neuladen identisch",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Lieferung: SHA-L mit gleicher Kennung",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Liefergebühr bis 7 km: 2,00 €",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Gesamt Lieferung 69,05 €",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Hausnummer wird verlangt",
+  "ok": true,
+  "info": "Bitte Straße und Hausnummer angeben"
+ },
+ {
+  "pruefung": "Lieferadresse mit PLZ und Ort",
+  "ok": true,
+  "info": "SHAHI KÜCHE – BESTELLUNG\n\nBestellreferenz: SHA-L-202611-JWGD55AG\nBestellart: Lieferung\nName: Erika Muster\nTelefon: 0170 1234567\nLieferadresse: Hauptstraße 5, 88447 Warthausen\nWunschzeit: so schnell wie möglich\n\nBESTELLUNG\n\n2 × Nr. 106 Salami – 18,80 € (je 9,40 €)\n\n1 × Nr. 20 Hamburgerle – 10,00 €\n- "
+ },
+ {
+  "pruefung": "Liefergebühr in der Nachricht",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "„Neue Bestellung“ leert Warenkorb und führt zur Speisekarte",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "neue Bestellung → neue Referenz",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Mindestbestellwert 15 € sperrt (7,90 €)",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Getränke-Abfrage bei Bestellung ohne Getränk",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "danach Bestellübersicht",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "keine Fehler im Bestellablauf",
+  "ok": true,
+  "info": "[]"
+ },
+ {
+  "pruefung": "Dienstag: Ruhetag, öffnet morgen 16:30",
+  "ok": true,
+  "info": "Heute Ruhetag · öffnet morgen um 16:30 Uhr"
+ },
+ {
+  "pruefung": "Montag 16:00: geschlossen, öffnet heute 16:30",
+  "ok": true,
+  "info": "Geschlossen · öffnet heute um 16:30 Uhr"
+ },
+ {
+  "pruefung": "Montag 22:20: Bestellschluss vorbei",
+  "ok": true,
+  "info": "Geöffnet bis 22:30 Uhr · Bestellschluss für heute vorbei"
+ },
+ {
+  "pruefung": "Freitag 11:05: geöffnet",
+  "ok": true,
+  "info": "Jetzt geöffnet · Bestellungen bis 22:15 Uhr"
+ },
+ {
+  "pruefung": "Sommerzeit (MESZ) Montag 18:00: geöffnet",
+  "ok": true,
+  "info": "Jetzt geöffnet · Bestellungen bis 22:15 Uhr"
+ },
+ {
+  "pruefung": "Sonderöffnungszeit: geschlossen mit Hinweis",
+  "ok": true,
+  "info": "Geschlossene Gesellschaft · öffnet Mittwoch um 16:30 Uhr"
+ },
+ {
+  "pruefung": "Betriebsferien: nächste Öffnung danach",
+  "ok": true,
+  "info": "Betriebsferien · öffnet am 23.11. um 16:30 Uhr"
+ },
+ {
+  "pruefung": "Bestellpause sperrt beide Bestellarten",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Bestellpause: Hinweis",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Wunschzeit Abholung: ab 18:30 (20 Min. Vorlauf, 15-Min.-Raster) bis 22:30",
+  "ok": true,
+  "info": "['asap', '18:30', '18:45', '22:30']"
+ },
+ {
+  "pruefung": "Wunschzeit Lieferung: ab 18:30 (30 Min. Vorlauf)",
+  "ok": true,
+  "info": "['asap', '18:30', '18:45']"
+ },
+ {
+  "pruefung": "nach Bestellschluss keine Bestellung",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Getränke mit offenem Pfand-Prüfpunkt: nur telefonisch",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Burger: nicht freigegebene Extras ausgeblendet, Burger bestellbar",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Party-Pizza mit offener Belagliste: nur telefonisch",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "ohne Impressum/Zahlungsarten/Steuerstatus keine Online-Bestellung",
+  "ok": true,
+  "info": "Die Online-Bestellung wird gerade freigeschaltet. Bitte bestellen Sie bis dahin telefonisch unter 07351 347 04 00."
+ },
+ {
+  "pruefung": "Abholung: enthaltene USt. 7 % 4,11 €, 19 % 0,68 €",
+  "ok": true,
+  "info": "lte Uhrzeit ist eine Wunschzeit. SHAHI Küche teilt Ihnen die bestätigte Abhol- oder Lieferzeit persönlich über WhatsApp mit.\n\nAlle Preise sind Endpreise in Euro. Diese Übersicht ist weder Rechnung noch Bestellbestätigung. Ein Vertrag kommt erst zustande, wenn SHAHI Küche Ihre Bestellung ausdrücklich"
+ },
+ {
+  "pruefung": "Lieferung: Liefergebühr anteilig, USt. 7 % 4,23 €, 19 % 0,70 €",
+  "ok": true,
+  "info": "nlich über WhatsApp mit.\n\nAlle Preise sind Endpreise in Euro. Diese Übersicht ist weder Rechnung noch Bestellbestätigung. Ein Vertrag kommt erst zustande, wenn SHAHI Küche Ihre Bestellung ausdrücklich per WhatsApp annimmt.\n\nÜbersicht erstellt am 16.11.2026 um 18:00 Uhr · Übersicht, keine Bestätigung"
+ },
+ {
+  "pruefung": "keine Umsatzsteuer aufgeschlagen (Gesamt unverändert brutto)",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "lange Nachricht: Warnung und Kopier-Ausweg",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "20.000 Referenzen: Format korrekt, keine Doppelung",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "… nur gültige Position, Menge begrenzt auf 50, Optionen bereinigt",
+  "ok": true,
+  "info": "50 ×\nNr. 20\nHamburgerle\n\nBeilage dazu: mit Pommes (+3,50 €)\nExtra Zusatz: Käse (+1,00 €)\n\n10,00 € / Stück\n\n500,00 €\n−\n50\n+\nÄndern\nEntfernen"
+ },
+ {
+  "pruefung": "390 px: kein seitliches Scrollen auf 27 Seiten",
+  "ok": true,
+  "info": "[]"
+ },
+ {
+  "pruefung": "390 px: Menü öffnet",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "390 px: Warenkorb-Drawer über Schaltfläche",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "390 px: keine Fehler",
+  "ok": true,
+  "info": "[]"
+ },
+ {
+  "pruefung": "768 px: kein seitliches Scrollen auf 27 Seiten",
+  "ok": true,
+  "info": "[]"
+ },
+ {
+  "pruefung": "768 px: Menü öffnet",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "768 px: Warenkorb-Drawer über Schaltfläche",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "768 px: keine Fehler",
+  "ok": true,
+  "info": "[]"
+ },
+ {
+  "pruefung": "„Bewegung reduzieren“: statisches Logo ohne Intro",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Intro läuft",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "Intro endet nach ca. 3,4 s in der statischen Endpose",
+  "ok": true,
+  "info": ""
+ },
+ {
+  "pruefung": "keine Fehler",
+  "ok": true,
+  "info": "[]"
+ }
+]
