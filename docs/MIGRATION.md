@@ -13,9 +13,8 @@ Stand 16.11.2026. Sicherung des Ausgangszustands: Branch `sicherung/shahi-vor-mi
 | `public/assets/logo/shahi-logo-anim.svg` | MINAR `tools/logo_anim.py` + `tools/paths.json` | Flyer-Logo = MINAR-Logo; Schriftzug „SHAHI“ und Unterzeile über `tools/logo/schriftzug.py` |
 | `tools/build.mjs` | MINAR `tools/build.mjs` | gleiche Bausteine und Klassen; Inhalte, Rechtstexte, SHAHI-Seiten, Datenprüfung ergänzt |
 | `public/assets/js/menu-data.js` | SHAHI `data/menu.json` + `data/config.json` | verlustfrei in das MINAR-Format übertragen (`tools/migration/shahi-v1-zu-menu-data.mjs`) |
-| Logo (Kopf, Fuß, Bon, Favicon) | SHAHI `assets/img/logo.svg` | unverändert in Form und Farbe; Varianten durch `tools/logo/logo.py` |
+| Logo (Kopf, Fuß, Bon, Favicon) | MINAR `tools/compose.py` + Flyer-Logo SHAHI | 1:1 wie MINAR mit Schriftzug „SHAHI“ (`tools/logo/compose.py`); Favicons = MINAR-Emblem (identisch) |
 | Illustrationen | SHAHI `assets/img/illustrationen.svg` | als Einzeldateien `public/assets/images/illu/*.svg` |
-| Favicons (PNG) | SHAHI `assets/img/favicon-32.png`, `apple-touch-icon.png` | übernommen |
 | Rechtstext-Entwürfe | MINAR-Aufbau + SHAHI-Entwürfe | neu zusammengeführt, auf GitHub Pages und SHAHI-Daten angepasst |
 | WhatsApp-Schnellantworten | MINAR `docs/` | auf SHAHI angepasst |
 
@@ -23,7 +22,7 @@ Nicht übernommen von MINAR: Schriftzug „MINAR“, Fotos (Gastraum, Theke, Ger
 
 ## 2. Entfernte bisherige SHAHI-Implementierung
 
-`assets/css/shahi.css`, `assets/js/{app,core,view}.js`, `assets/fonts/` (Fraunces nur noch als Werkzeug in `tools/logo/`), `assets/img/og-image.png`, `logo-192/512.png`, `site.webmanifest`, `sitemap.xml`, `tools/{arch,render-assets,report}.mjs`, `tests/*.mjs`, `data/*.json`, alle bisherigen HTML-Seiten (`lieferung.html`, `restaurant.html` → `lieferservice.html`, `ueber-uns.html`/`kontakt.html`). Es gibt **ein** Warenkorbsystem (MINAR), **ein** Stylesheet und **eine** Datenquelle. Die bisherigen Adressen waren nicht veröffentlicht (keine Domain, `noindex`) – Weiterleitungen sind nicht nötig.
+`assets/css/shahi.css`, `assets/js/{app,core,view}.js`, `assets/fonts/` (Fraunces), Spitzbogen-Logo `assets/img/logo.svg` und Favicons (ersetzt durch das Flyer-Logo), `assets/img/og-image.png`, `logo-192/512.png`, `site.webmanifest`, `sitemap.xml`, `tools/{arch,render-assets,report}.mjs`, `tests/*.mjs`, `data/*.json`, alle bisherigen HTML-Seiten (`lieferung.html`, `restaurant.html` → `lieferservice.html`, `ueber-uns.html`/`kontakt.html`). Es gibt **ein** Warenkorbsystem (MINAR), **ein** Stylesheet und **eine** Datenquelle. Die bisherigen Adressen waren nicht veröffentlicht (keine Domain, `noindex`) – Weiterleitungen sind nicht nötig.
 
 Übernommene Logik aus der bisherigen SHAHI-Website (`core.js`), weil MINAR sie nicht hat: Öffnungszeiten mit mehreren Zeitfenstern je Tag, Sonderöffnungszeiten, Betriebsferien, kurzfristige Schließungen, Bestellpause, Bestellschluss je Bestellart, Vorbereitungszeit je Bestellart, Eröffnungsmodus, Livegang-Schutz, sperrende Prüfpunkte, Steueraufteilung, Lieferorte mit Bestätigung, Grundpreis je Liter.
 

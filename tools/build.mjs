@@ -152,7 +152,7 @@ function header(root, active) {
     </div>
     <div class="container header-inner">
       <a class="brand" href="${root}index.html" aria-label="${esc(R.name)} – zur Startseite">
-        <img src="${root}assets/logo/shahi-logo.svg" alt="${esc(R.name)}" width="146" height="56">
+        <img src="${root}assets/logo/shahi-logo-horizontal.svg" alt="${esc(R.name)}" width="236" height="56">
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Hauptnavigation">
         <ul>
@@ -177,7 +177,7 @@ function footer(root) {
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-brand">
-        <img src="${root}assets/logo/shahi-logo-light.svg" alt="${esc(R.name)} – Logo" width="150" height="152" loading="lazy">
+        <img src="${root}assets/logo/shahi-logo.svg" alt="${esc(R.name)} – Logo" width="200" height="154" loading="lazy">
       </div>
       <div class="f-col">
         <div class="f-contact">
@@ -796,7 +796,7 @@ built.push(page({
       <h2>Verbraucherstreitbeilegung</h2><p>${ph(R.disputeResolution, "Angabe nach § 36 VSBG, soweit erforderlich – rechtlich zu prüfen")}</p>
       ${R.responsibleContent ? `<h2>Verantwortlich für den Inhalt</h2><p>${esc(R.responsibleContent)}</p>` : ""}
       <h2>Webdesign</h2><p><a href="https://braeuer.digital" target="_blank" rel="noopener">Bräuer.Digital</a></p>
-      <h2>Bildnachweis</h2><p>Logo und Illustrationen: eigene Gestaltung für ${esc(R.name)} (Bräuer.Digital). Logoschrift „Fraunces“ unter der SIL Open Font License 1.1.</p>
+      <h2>Bildnachweis</h2><p>Logo: ${esc(R.name)} (Logo laut Speisekarte/Flyer). Illustrationen: eigene Gestaltung für ${esc(R.name)} (Bräuer.Digital).</p>
     </div></section>`
 }));
 

@@ -25,7 +25,7 @@ Referenz: `BraeuerDigital/minar@baa0875` (nur gelesen, nicht verändert) · Ausg
 
 ## B. SHAHI-spezifische Anpassungen
 
-1. **Marke:** Kopfzeile, Fußzeile (dunkler Grund), Bon und Favicon zeigen das Spitzbogen-Logo der bisherigen SHAHI-Website (`tools/logo/logo.py`, Fraunces als Pfade). Vereinheitlichung mit dem Flyer-Logo ist offen (Freigabeliste 4.11).
+1. **Marke:** überall das Logo des SHAHI-Flyers, das dem MINAR-Logo bis auf den Schriftzug entspricht: Kopfzeile (horizontal), Fußzeile, Bon (Emblem), Favicon – Dateien, Formate und Größen wie MINAR (`tools/logo/compose.py`). Das Spitzbogen-Logo der bisherigen Website wird nicht mehr verwendet (liegt im Sicherungs-Branch).
 2. **Logo-Intro:** MINAR-Animation 1:1 mit dem Flyer-Logo von SHAHI (das bis auf den Schriftzug dem MINAR-Logo entspricht): Schriftzug „SHAHI“ aus den Original-Buchstabenformen („A“, „I“ original, „H“ aus zwei „I“, „S“ aus Bookman Demi in Originalstärke, `tools/logo/schriftzug.py`), Unterzeile „— LIEFERSERVICE • ABHOLUNG —“ (ohne „Restaurant“), Ablauf und Dauer (5,5 s) wie MINAR.
 3. **Inhalte:** vollständige SHAHI-Speisekarte (16 Kategorien, 166 Positionen, Varianten, Extras, Beläge, Allergene, Zusatzstoffe, Pfand, Prüfpunkte) verlustfrei migriert ([`MIGRATION.md`](MIGRATION.md)); Adresse, drei Festnetznummern, WhatsApp 0179 69 500 47; Texte für Abholung und Lieferservice.
 4. **Öffnungszeiten:** Mo, Mi, Do 16:30–22:30 · Fr–So 11:00–22:30 · Di Ruhetag, Bestellschluss 22:15, Vorlauf 20/30 Min., Europe/Berlin; zusätzlich Sonderöffnungszeiten, Betriebsferien, kurzfristige Schließungen, manuelle Bestellpause.
@@ -41,8 +41,7 @@ Referenz: `BraeuerDigital/minar@baa0875` (nur gelesen, nicht verändert) · Ausg
 
 | Abweichung | Grund |
 |---|---|
-| Schriftzug „SHAHI“ und Unterzeile ohne „Restaurant“ im Logo-Intro | Restaurantname laut Flyer; Angebot laut Flyer: Abholung und Lieferservice |
-| Spitzbogen-Logo in Kopf-, Fußzeile, Bon, Favicon | bisheriges SHAHI-Logo; Fußzeilen-Logo 150 statt 190 px breit (gestapeltes Logo ist höher) – Entscheidung offen (4.11) |
+| Schriftzug „SHAHI“ in allen Logos, Unterzeile ohne „Restaurant“ im Logo-Intro | Restaurantname laut Flyer; Angebot laut Flyer: Abholung und Lieferservice |
 | Illustrationen statt Fotos (Galerie, Kategorieköpfe, „Über uns“), vollständig sichtbar im gleichen Rahmen, Hinweis „Illustration – kein Produktfoto“ | keine SHAHI-Fotos vorhanden; MINAR-Fotos zeigen das MINAR-Restaurant und dürfen nicht verwendet werden |
 | Kategoriebild auf allen 16 Kategorieseiten (MINAR: 5) | für jede SHAHI-Kategorie gibt es eine Illustration; gleiche Komponente |
 | Topbar-Claim „Lieferservice · Abholung · Biberach“, Service-Karte „In der Bachgasse 17“ statt „Im Restaurant“ | Restaurantbetrieb mit Sitzplätzen ist nicht belegt (Freigabe 2.7) |

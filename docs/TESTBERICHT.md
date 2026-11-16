@@ -129,11 +129,11 @@ Für den Normalbetrieb werden die Daten nur im Test ergänzt (Betreiberangaben, 
 | # | Prüfpunkt | Ergebnis |
 |---|---|---|
 | 1 | Header-Höhe | identisch (Topbar + Kopfzeile, `--header-h` unverändert) |
-| 2 | Logo-Platzierung | identisch; SHAHI-Logo ist kompakter (Seitenverhältnis 2,6 : 1 statt 4,2 : 1), gleiche Höhe 52/44/38 px |
+| 2 | Logo-Platzierung | identisch (gleiche Logo-Dateiformate und Größen, Schriftzug „SHAHI“) |
 | 3 | Navigationsabstände | identisch, gleitender Indikator wie MINAR |
 | 4 | Hero-Proportionen | identisch (gleiches Logo-SVG-Format, gleiche Größe) |
 | 5 | Hintergrundfarben und Verläufe | identisch (Aurora, Raster, Halo, rotierender Ring, Laufbänder); Hintergrund-Schriftzug „SHAHI“ |
-| 6 | Typografie und Schriftgrößen | identisch (Systemschriften, keine neue Schrift; Fraunces nur als Pfade im Logo) |
+| 6 | Typografie und Schriftgrößen | identisch (Systemschriften, keine neue Schrift) |
 | 7 | Button-Styling | identisch (Blattform, Licht-Spot, Lichtstreif, Roll-Label, Magnet) |
 | 8 | Karten-Design | identisch (Gerichte, Service-Liste, Kontakt- und Zonenkarten) |
 | 9 | Hover-Zustände | identisch (`fx.js` unverändert) |
@@ -141,7 +141,7 @@ Für den Normalbetrieb werden die Daten nur im Test ergänzt (Betreiberangaben, 
 | 11 | Abschnittsabstände | identisch |
 | 12 | Warenkorb | identisch (dunkle Karte, Referenz, Mengensteuerung, Ändern/Entfernen, Summen) |
 | 13 | Bestellübersicht | identisch (Bon-Gestaltung); zusätzlicher Textlink „Bestelltext kopieren“ |
-| 14 | Footer | identisch; helles Logo für den dunklen Grund, ohne E-Mail-Zeile (keine Adresse vorhanden), zusätzliche Links „Bestellinfos · Allergene“ |
+| 14 | Footer | identisch; Kontaktzeile Adresse statt E-Mail (noch keine E-Mail-Adresse), zusätzliche Links „Bestellinfos · Allergene“ |
 | 15 | Mobile Navigation | identisch |
 
 Begründete Abweichungen: siehe [`ABSCHLUSSBERICHT.md`](ABSCHLUSSBERICHT.md), Abschnitt C.

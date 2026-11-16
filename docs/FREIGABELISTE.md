@@ -58,7 +58,7 @@ Details: [`PRUEFPUNKTE-SPEISEKARTE.md`](PRUEFPUNKTE-SPEISEKARTE.md). Schwerpunkt
 | 4.8 | „Minar“ im SHAHI-Flyer: Nr. 98 „Dönerteller Minar überbacken“, Nr. 158 „Minar Gewürzmischung“ – Namen so lassen? (Website übernimmt den Flyer wörtlich) |
 | 4.9 | Döner-Soßen: MINAR bietet eine Soßenauswahl an; der SHAHI-Flyer nennt keine – derzeit nur Hinweisfeld. Gewünscht? |
 | 4.10 | Eigene Fotos der Gerichte und des Ladens (Bildrechte) – bis dahin Illustrationen |
-| 4.11 | **Logo vereinheitlichen:** Das Logo-Intro der Startseite zeigt auf Wunsch das Flyer-Logo (Tier vor der Sonne, Halbmond mit Stern, „SHAHI Küche“) mit der MINAR-Animation. Kopfzeile, Fußzeile, Bon und Favicon zeigen noch das Spitzbogen-Logo der bisherigen Website. Entscheidung: überall Flyer-Logo? Nutzungsrechte am Flyer-Logo bestätigen (identisch mit dem MINAR-Logo). |
+| 4.11 | **Logo:** Auf Wunsch überall das Flyer-Logo (Tier vor der Sonne, Halbmond mit Stern, „SHAHI Küche“), identisch mit dem MINAR-Logo bis auf den Schriftzug. Nutzungsrechte bestätigen (gleiche Inhaberschaft wie MINAR?). |
 | 4.12 | Abgleich der Karte mit dem Flyer: vollständig ([`SPEISEKARTE-ABGLEICH.md`](SPEISEKARTE-ABGLEICH.md)) |
 
 ## 5. Steuer (S)

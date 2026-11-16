@@ -2,7 +2,7 @@
    SHAHI Küche – Designsystem „Future Edition“
    Übernommen 1:1 aus dem MINAR-Designsystem (BraeuerDigital/minar, public/assets/css/styles.css,
    Stand 16.11.2026). Änderungen gegenüber MINAR: nur Umbenennungen (Variablen --minar-* → --shahi-*,
-   Klasse .shahi-logo-anim → .shahi-logo-anim, Hintergrund-Schriftzug „SHAHI“) sowie der klar
+   Klasse .minar-logo-anim → .shahi-logo-anim, Hintergrund-Schriftzug „SHAHI“) sowie der klar
    abgegrenzte Block „SHAHI – notwendige Anpassungen“ am Dateiende. Alle Farbwerte sind unverändert.
    Herkunft der Gestaltung (MINAR):
    Konzept: Flyer-Farbwelt (Grün · Gelb · Rot · Creme · Sonnen-Orange),
@@ -1637,13 +1637,9 @@ details.opt-group > .opt-list { padding: 0 .6rem .7rem; }
 
 /* =====================================================================
    SHAHI – notwendige Anpassungen
-   Nur dort, wo Logo, Bildmaterial oder SHAHI-spezifische Inhalte es erfordern.
+   Nur dort, wo Bildmaterial oder SHAHI-spezifische Inhalte es erfordern.
    Es werden ausschließlich vorhandene Variablen und Formen des Designsystems verwendet.
    ===================================================================== */
-
-/* Logo-Proportionen: SHAHI-Logo ist gestapelt (Fußzeile) bzw. kompakter (Kopfzeile) */
-.footer-brand img { width: 150px; }
-@media (max-width: 560px) { .footer-brand img { width: 136px; } }
 
 /* Eigene Illustrationen statt Fotos (bis eigene SHAHI-Fotos vorliegen):
    gleicher Rahmen, Bild vollständig sichtbar statt beschnitten */

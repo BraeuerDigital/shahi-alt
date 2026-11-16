@@ -80,4 +80,6 @@ tax: { status: "bestaetigt", smallBusiness: false, show: false, … }
 
 ## Logo
 
-Quelle ist das SHAHI-Logo; Varianten erzeugt `python3 tools/logo/logo.py` (danach `node tools/build.mjs`). Das Logo nicht von Hand in den SVG-Dateien ändern.
+Logo des SHAHI-Flyers (wie MINAR, Schriftzug „SHAHI“). Neu erzeugen nur bei Änderungen an den Formen:
+`python3 tools/logo/schriftzug.py && python3 tools/logo/compose.py && python3 tools/logo/logo_anim.py && node tools/build.mjs`.
+Die SVG-Dateien nicht von Hand ändern.

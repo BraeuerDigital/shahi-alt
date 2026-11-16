@@ -3,7 +3,7 @@
 Statische Multi-Page-Website für **SHAHI Küche**, Bachgasse 17, 88400 Biberach an der Riß.
 Lieferservice · Abholung. Künftige Domain: `www.shahi-biberach.de` (noch **nicht** verknüpft).
 
-Design und Technik sind ein **originalgetreuer Nachbau des MINAR-Designsystems** (`BraeuerDigital/minar`, Stand 16.11.2026): gleiche CSS-Komponenten, gleiche Animationen, gleicher Warenkorb, gleiche Bestellstrecke. Das Logo-Intro der Startseite ist die MINAR-Animation 1:1 mit dem Flyer-Logo von SHAHI (Schriftzug „SHAHI“). Angepasst sind nur Name, Inhalte, Speisekarte, Betriebsbedingungen und Rechtstexte – Details in [`docs/ABSCHLUSSBERICHT.md`](docs/ABSCHLUSSBERICHT.md).
+Design und Technik sind ein **originalgetreuer Nachbau des MINAR-Designsystems** (`BraeuerDigital/minar`, Stand 16.11.2026): gleiche CSS-Komponenten, gleiche Animationen, gleicher Warenkorb, gleiche Bestellstrecke. Das Logo ist das Logo des SHAHI-Flyers (wie MINAR, mit Schriftzug „SHAHI“) – in Kopfzeile, Fußzeile, Bestellübersicht, Favicon und im Logo-Intro, das 1:1 der MINAR-Animation entspricht. Angepasst sind nur Name, Inhalte, Speisekarte, Betriebsbedingungen und Rechtstexte – Details in [`docs/ABSCHLUSSBERICHT.md`](docs/ABSCHLUSSBERICHT.md).
 
 HTML, CSS und Vanilla JavaScript – keine Frameworks, keine Datenbank, kein Backend, keine externen Dienste oder Schriften.
 Hosting: **GitHub Pages** (wie bisher bei SHAHI), Veröffentlichung nur manuell – siehe [`docs/HOSTING-UND-DOMAIN.md`](docs/HOSTING-UND-DOMAIN.md).
@@ -36,12 +36,13 @@ Hosting: **GitHub Pages** (wie bisher bei SHAHI), Veröffentlichung nur manuell 
 │       ├── js/app.js             Navigation, Öffnungsstatus, Speisekarte, Suche, Warenkorb, Bon, WhatsApp
 │       ├── js/fx.js              Interaktions-Effekte (unverändert von MINAR)
 │       ├── js/logo-anim.js       Logo-Intro der Startseite
-│       ├── logo/                 SHAHI-Logo-Varianten, Favicons
+│       ├── logo/                 Logo-Varianten (wie MINAR), Favicons
 │       └── images/illu/          eigene Illustrationen (bis Fotos vorliegen)
 ├── tools/
 │   ├── build.mjs                 Seitengenerator + Datenprüfung + Prüfpunkte-Liste
-│   ├── logo/logo_anim.py         Logo-Intro (1:1 MINAR) · logo/schriftzug.py: Schriftzug „SHAHI“
-│   ├── logo/logo.py              statische Logo-Varianten (Kopf, Fuß, Bon, Favicon)
+│   ├── logo/schriftzug.py        Schriftzug „SHAHI“ aus den MINAR-Formen → logo/paths.json
+│   ├── logo/compose.py           Logo-Varianten Kopf, Fuß, Bon, Favicon (1:1 MINAR)
+│   ├── logo/logo_anim.py         Logo-Intro (1:1 MINAR)
 │   └── migration/                einmalige Übernahme der bisherigen SHAHI-Daten
 ├── tests/
 │   ├── e2e.py                    Browser-Tests (86 Prüfungen)
@@ -100,7 +101,7 @@ Bestellreferenz `SHA-A-YYYYMM-XXXXXXXX` (Abholung) bzw. `SHA-L-…` (Lieferung):
 
 Unverändert das MINAR-Designsystem „Future Edition“ (Orange/Grün): Farbvariablen (`--shahi-*`, Werte identisch zu `--minar-*`), Blattform-Ecken, Buttons mit Licht-Spot/Lichtstreif/Roll-Label/Magnet, sich kreuzende Laufbänder, Outline-Schriftzug im Hintergrund („SHAHI“), Kategorie-Karten mit Tilt, Gerichte mit Spotlight, gleitender Navigations-Indikator, Scroll-Fortschritt, Scrollspy. Effekte werden bei „Bewegung reduzieren“ und auf Touch-Geräten reduziert.
 
-Logo: Das Logo-Intro der Startseite zeigt das Logo des SHAHI-Flyers (Tier vor der Sonne, Zierlinien, Halbmond mit Stern, „SHAHI Küche“) – es ist mit dem MINAR-Logo identisch bis auf den Schriftzug. Kopfzeile, Fußzeile, Bon und Favicon zeigen derzeit das Spitzbogen-Logo der bisherigen SHAHI-Website (`tools/logo/logo.py`); Umstellung auf das Flyer-Logo siehe Freigabeliste 4.11.
+Logo: überall das Logo des SHAHI-Flyers (Tier vor der Sonne, Zierlinien, Halbmond mit Stern, „SHAHI Küche“) – identisch mit dem MINAR-Logo bis auf den Schriftzug; Varianten und Größen wie bei MINAR (`tools/logo/compose.py`).
 
 ## Logo-Intro (Startseite)
 
@@ -108,7 +109,7 @@ Logo: Das Logo-Intro der Startseite zeigt das Logo des SHAHI-Flyers (Tier vor de
 
 - Formen: MINAR-Logovorlage (`tools/logo/paths-minar.json`). Schriftzug „SHAHI“: „A“ und „I“ original, „H“ aus zwei Original-„I“, „S“ aus Bookman Demi auf die Strichstärke des Originals gebracht (`tools/logo/schriftzug.py`). Unterzeile „— LIEFERSERVICE • ABHOLUNG —“ aus der Original-Unterzeile (ohne „Restaurant“, laut Flyer Abholung und Lieferservice).
 - Dateien: `public/assets/logo/shahi-logo-anim.svg` (inline eingesetzt), `public/assets/js/logo-anim.js`.
-- Neu erzeugen: `python3 tools/logo/schriftzug.py && python3 tools/logo/logo_anim.py && node tools/build.mjs`.
+- Neu erzeugen: `python3 tools/logo/schriftzug.py && python3 tools/logo/compose.py && python3 tools/logo/logo_anim.py && node tools/build.mjs`.
 
 ## Lokal ansehen und testen
 

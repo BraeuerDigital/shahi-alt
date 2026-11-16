@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+"""
+SHAHI Küche – feste Logo-Varianten (1:1 aus dem MINAR-Projekt, tools/compose.py)
+=================================================================================
+Gleiche Formen und Anordnung wie MINAR (Logo des SHAHI-Flyers = MINAR-Logo mit Schriftzug „SHAHI“).
+Quelle: tools/logo/paths.json (erzeugt von tools/logo/schriftzug.py).
+
+Ausgabe in public/assets/logo/:
+  shahi-logo.svg             Emblem, Schriftzug, Halbmond (Fußzeile)
+  shahi-logo-horizontal.svg  Emblem links, Schriftzug rechts (Kopfzeile)
+  shahi-emblem.svg           nur Emblem (Bestellübersicht/Bon)
+  shahi-wordmark.svg         nur Schriftzug
+  halbmond-stern.svg         Halbmond mit Stern
+  favicon.svg                Emblem (wie MINAR)
+
+Ausführen: python3 tools/logo/compose.py && node tools/build.mjs
+"""
+import os
+HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.normpath(os.path.join(HERE, "..", "..", "public", "assets", "logo"))
+import json
+p=json.load(open(os.path.join(HERE, "paths.json")))
+cx,cy,r=p['cx'],p['cy'],p['rad']
+GREEN="#476a0b"; RED="#a50d14"; INK="#17120a"
+defs=f'''<defs>
+  <linearGradient id="mk-sun" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f86a0a"/><stop offset=".45" stop-color="#f7a24a"/><stop offset=".8" stop-color="#fbdcaa"/><stop offset="1" stop-color="#fcefd8"/>
+  </linearGradient>
+  <clipPath id="mk-cut"><rect x="0" y="0" width="1600" height="463"/></clipPath>
+  <filter id="mk-shadow" x="-5%" y="-5%" width="110%" height="120%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#1c2a00" flood-opacity=".35"/></filter>
+</defs>'''
+emblem=f'''<g class="mk-emblem">
+  <g clip-path="url(#mk-cut)"><circle cx="{cx}" cy="{cy}" r="{r-2}" fill="url(#mk-sun)" stroke="#3d5413" stroke-width="5"/></g>
+  <path fill="{INK}" d="{p['goat']}"/>
+  <path fill="{RED}" d="{p['lines']}"/>
+</g>'''
+word=f'''<g class="mk-word" filter="url(#mk-shadow)"><path fill="{GREEN}" stroke="#fff" stroke-width="7" stroke-linejoin="round" paint-order="stroke" fill-rule="evenodd" d="{p['word']}"/></g>'''
+seal=f'''<path class="mk-seal" fill="{RED}" fill-rule="evenodd" d="{p['seal']}"/>'''
+moon=f'''<path class="mk-moon" fill="{GREEN}" fill-rule="evenodd" d="{p['moon']}"/>'''
+def svg(vb,body,title):
+    return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{vb}" role="img" aria-label="{title}"><title>{title}</title>{defs}{body}</svg>\n'
+open(os.path.join(OUT,'shahi-logo.svg'),'w').write(svg("160 10 1170 900", emblem+word+moon, "SHAHI Küche – Logo"))
+open(os.path.join(OUT,'shahi-emblem.svg'),'w').write(svg(f"{cx-r-6} {cy-r-6} {2*r+12} {463-(cy-r-6)+60}", emblem, "SHAHI Küche – Emblem"))
+open(os.path.join(OUT,'favicon.svg'),'w').write(svg(f"{cx-r-6} {cy-r-6} {2*r+12} {463-(cy-r-6)+60}", emblem, "SHAHI Küche – Emblem"))
+open(os.path.join(OUT,'shahi-wordmark.svg'),'w').write(svg("200 515 1130 385", word, "SHAHI Küche"))
+open(os.path.join(OUT,'halbmond-stern.svg'),'w').write(svg("1010 55 200 200", moon, "Halbmond und Stern"))
+
+# Horizontale Kompaktvariante für den Header: Emblem links, Schriftzug rechts
+ex, ey = cx - r - 6, cy - r - 6
+eh = 523 - ey                     # Emblem inkl. Zierlinien
+s = 385 / eh                      # auf Höhe des Schriftzugs skalieren
+ew = (2 * r + 12) * s
+body = (f'<g transform="translate(0 0) scale({s:.4f}) translate({-ex:.1f} {-ey:.1f})">{emblem}</g>'
+        f'<g transform="translate({ew + 40:.1f} 0) translate(-200 -515)">{word}</g>')
+open(os.path.join(OUT,'shahi-logo-horizontal.svg'), 'w').write(svg(f"0 0 {ew + 40 + 1130:.0f} 385", body, "SHAHI Küche"))
+print('Logo-Varianten geschrieben nach', OUT)
